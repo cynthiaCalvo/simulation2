@@ -1,7 +1,41 @@
 package simulation;
 
-public class Simulation_Game {
-	//to make window(GUI)
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Simulation_Game implements ActionListener{
 	
-	//(David) ahahahahahahah, i need to remember how to do that...
+	private JFrame frame;
+	private JPanel panel;
+	
+	public Simulation_Game() {
+		frame = new JFrame("Frame");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(1540, 900);
+		frame.setLocationRelativeTo(null);
+		
+		panel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		//put everything else here
+		
+		
+		//do not put anything in this method past these two lines
+		frame.setContentPane(panel);
+		frame.setVisible(true);
+	}
+
+	//for buttons
+	public void actionPerformed(ActionEvent arg0) {
+		
+		
+	}
+	
 }
