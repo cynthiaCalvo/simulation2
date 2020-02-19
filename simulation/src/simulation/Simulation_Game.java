@@ -1,5 +1,6 @@
 package simulation;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,9 @@ public class Simulation_Game implements ActionListener{
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		//put everything else here
+		
+		panel.setOpaque(true);
+		panel.setBackground(Color.CYAN);
 		
 		
 		//do not put anything in this method past these two lines
