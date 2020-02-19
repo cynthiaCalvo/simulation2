@@ -32,7 +32,7 @@ public class Simulation_Game implements ActionListener{
 		frame.setVisible(true);
 	}
 
-	//for buttons
+	//for buttons, which I'm assuming we'll need
 	public void actionPerformed(ActionEvent arg0) {
 		
 		
