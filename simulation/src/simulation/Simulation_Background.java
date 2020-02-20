@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class Simulation_Background {
 	private String pokemonNameBank[][] = {
-			{"f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9"},
-			{"g0", "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9"},
-			{"w0", "w1", "w2", "w3", "w4", "w5", "w6", "w7", "w8", "w9"}
+			{"Skorbunny", "Charmander", "Vulpix", "Torchic", "Fennekin", "Lampent", "Fletchinder", "Braixen", "Litten", "Victini"},
+			{"Bulbasaur", "Oddish", "Chickorita", "Cherubi", "Snivy", "Pansage", "Rowlett", "Skiddo", "Grookey", "Bounsweet"},
+			{"Squirtle", "Seel", "Vaporeon", "Totodile", "Omanyte", "Lotad", "Spheal", "Oshawott", "Ducklett", "Sobble"}
 	};
 	private boolean noRepeats[][];
 	private String pokemonNames[][];
