@@ -11,16 +11,6 @@ public class Simulation_Main {
 		
 		int[] level = new int[3];
 		
-		for(int j = 0; j < 3; j++) {
-			level[j] = test.returnPokemonNumbers(j);
-		}
-		
 		back.resetPokemonNames();
-		
-		for(int i = 0; i < 3; i++) {
-			if(level[i] != 0) {
-				back.pickPokemonRandom(level[i], i);
-			}
-		}
 	}
 }

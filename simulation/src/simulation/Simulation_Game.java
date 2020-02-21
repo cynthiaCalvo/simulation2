@@ -53,19 +53,18 @@ public class Simulation_Game implements ActionListener{
 		frame.setContentPane(panel);
 		frame.setVisible(true);
 	}
-	
-	public int returnPokemonNumbers(int level) {
-		return pokemonNumbers[level];
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String eventName = event.getActionCommand();
+		Simulation_Background back = new Simulation_Background();
+		
+		back.resetPokemonNames();
 		
 		if(eventName.equals("GO")) {
 			for(int i = 0; i < 3; i++) {
 				pokemonNumbers[i] = Integer.parseInt(choosePopulation[i].getText());
-				System.out.println(pokemonNumbers[i]);
+				back.pickPokemonRandom(pokemonNumbers[i], i);
 			}
 		}
 		
