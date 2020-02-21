@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,6 +17,9 @@ public class Simulation_Game implements ActionListener{
 	
 	private JFrame frame;
 	private JPanel panel;
+	private JTextField[] choosePopulation;
+	private int[] pokemonNumbers;
+	private JButton button;
 	
 	public Simulation_Game() {
 		frame = new JFrame("Frame");
@@ -27,18 +31,43 @@ public class Simulation_Game implements ActionListener{
 		GridBagConstraints c = new GridBagConstraints();
 		//put everything else here
 		
+		pokemonNumbers = new int[3];
+		button = new JButton("GO");
+		button.addActionListener(this);
+		button.setActionCommand("GO");
+		
+		choosePopulation = new JTextField[3];
+		
+		for(int i = 0; i < 3; i++) {
+			choosePopulation[i] = new JTextField(10);
+			choosePopulation[i].setActionCommand(Integer.toString(i));
+			panel.add(choosePopulation[i]);
+			
+		}
+		
 		panel.setOpaque(true);
 		panel.setBackground(Color.CYAN);
 		
-		
-		//do not put anything in this method past these two lines
+		panel.add(button);
+
 		frame.setContentPane(panel);
 		frame.setVisible(true);
 	}
+	
+	public int returnPokemonNumbers(int level) {
+		return pokemonNumbers[level];
+	}
 
-	//for buttons, which I'm assuming we'll need
-	public void actionPerformed(ActionEvent arg0) {
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		String eventName = event.getActionCommand();
 		
+		if(eventName.equals("GO")) {
+			for(int i = 0; i < 3; i++) {
+				pokemonNumbers[i] = Integer.parseInt(choosePopulation[i].getText());
+				System.out.println(pokemonNumbers[i]);
+			}
+		}
 		
 	}
 	
