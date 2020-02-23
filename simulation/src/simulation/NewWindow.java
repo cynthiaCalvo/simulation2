@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class NewWindow {
-	//hi
+	//hi hi
 	private JFrame frame;
 	private JPanel panelBlue, panelRed, panelGreen, panelGray, panelMain;
 	
