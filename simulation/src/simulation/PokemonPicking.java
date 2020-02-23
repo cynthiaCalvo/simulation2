@@ -2,7 +2,7 @@ package simulation;
 
 import java.util.Random;
 
-public class Simulation_Background {
+public class PokemonPicking {
 	private String pokemonNameBank[][] = {
 			{"Skorbunny", "Charmander", "Vulpix", "Torchic", "Fennekin", "Lampent", "Fletchinder", "Braixen", "Litten", "Victini"},
 			{"Bulbasaur", "Oddish", "Chickorita", "Cherubi", "Snivy", "Pansage", "Rowlett", "Skiddo", "Grookey", "Bounsweet"},
@@ -11,7 +11,7 @@ public class Simulation_Background {
 	private boolean noRepeats[][];
 	private String pokemonNames[][];
 	
-	public Simulation_Background() {
+	public PokemonPicking() {
 		pokemonNames = new String[3][10];
 		noRepeats = new boolean[3][10];
 		/**will set the extra spots at the end(if there are any) to 

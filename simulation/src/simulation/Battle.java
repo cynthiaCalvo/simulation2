@@ -1,6 +1,8 @@
 package simulation;
 
-public class Simulation_Battle {
+import java.util.Random;
+
+public class Battle {
 	//this will handle the fighting aspect of the program
 	private String pokemonMoves[][] = {
 			{"Fire punch", "Flamethrower", "Heat crash", "Inferno", "Incinerate"}, //fire moves

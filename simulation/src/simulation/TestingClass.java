@@ -2,11 +2,11 @@ package simulation;
 
 import java.util.Scanner;
 
-public class Simulation_Main {
+public class TestingClass {
 
 	public static void main(String[] args) {
-		Simulation_Background back = new Simulation_Background();
-		Simulation_Game test = new Simulation_Game();
+		PokemonPicking back = new PokemonPicking();
+		FirstWindow test = new FirstWindow();
 		Scanner input = new Scanner(System.in);
 		
 		int[] level = new int[3];

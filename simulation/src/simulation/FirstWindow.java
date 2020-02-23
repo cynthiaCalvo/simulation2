@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Simulation_Game implements ActionListener{
+public class FirstWindow implements ActionListener{
 	
 	private JFrame frame;
 	private JPanel panel;
@@ -21,7 +21,7 @@ public class Simulation_Game implements ActionListener{
 	private int[] pokemonNumbers;
 	private JButton button;
 	
-	public Simulation_Game() {
+	public FirstWindow() {
 		frame = new JFrame("Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1540, 900);
@@ -57,7 +57,7 @@ public class Simulation_Game implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String eventName = event.getActionCommand();
-		Simulation_Background back = new Simulation_Background();
+		PokemonPicking back = new PokemonPicking();
 		
 		back.resetPokemonNames();
 		
@@ -66,6 +66,7 @@ public class Simulation_Game implements ActionListener{
 				pokemonNumbers[i] = Integer.parseInt(choosePopulation[i].getText());
 				back.pickPokemonRandom(pokemonNumbers[i], i);
 			}
+			NewWindow nw = new NewWindow();
 		}
 		
 	}
