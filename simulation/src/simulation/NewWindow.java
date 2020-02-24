@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,6 +22,13 @@ import javax.swing.JTextField;
 public class NewWindow {
 	private JFrame frame;
 	private JPanel panelBlue, panelRed, panelGreen, panelGray, panelMain;
+	private JLabel[][] pokemonPictures;
+	private String[][] pokemonPicSource = {
+			{},
+			{},
+			{}
+	};
+	private JLabel image;
 	
 	public NewWindow() {
 		frame = new JFrame("Frame");
@@ -37,10 +45,15 @@ public class NewWindow {
 		panelMain.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
+		image = new JLabel();
+		
+		image.setIcon(new ImageIcon("Scorbunny.png"));
+		panelGray.add(image);
+		
 		panelRed.setBackground(Color.red);
 		c.gridy = 0;
 		c.ipadx = 1540;
-		c.ipady = 62;
+		c.ipady = 70;
 		c.insets = new Insets(10,0,0,0);
 		panelMain.add(panelRed, c);
 		
@@ -54,7 +67,7 @@ public class NewWindow {
 		
 		panelGray.setBackground(Color.gray);
 		c.gridy = 3;
-		c.ipady = 550;
+		c.ipady = 580;
 		panelMain.add(panelGray, c);
 		
 		frame.setContentPane(panelMain);
