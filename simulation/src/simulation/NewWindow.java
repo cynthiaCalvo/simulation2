@@ -63,8 +63,8 @@ public class NewWindow {
 		panelMain.add(panelBlue, c);
 		
 		panelGray.setBackground(Color.gray);
-		//image.setIcon(new ImageIcon("simulation/Scorbunny.png"));
-		//panelGray.add(image);
+		image.setIcon(new ImageIcon("H:\\git\\simulation2\\simulation\\src\\simulation\\Images/Scorbunny.png"));
+		panelGray.add(image);
 		c.gridy = 3;
 		c.ipady = 580;
 		panelMain.add(panelGray, c);
