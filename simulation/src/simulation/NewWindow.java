@@ -47,9 +47,6 @@ public class NewWindow {
 		
 		image = new JLabel();
 		
-		image.setIcon(new ImageIcon("Scorbunny.png"));
-		panelGray.add(image);
-		
 		panelRed.setBackground(Color.red);
 		c.gridy = 0;
 		c.ipadx = 1540;
@@ -66,6 +63,8 @@ public class NewWindow {
 		panelMain.add(panelBlue, c);
 		
 		panelGray.setBackground(Color.gray);
+		//image.setIcon(new ImageIcon("simulation/Scorbunny.png"));
+		//panelGray.add(image);
 		c.gridy = 3;
 		c.ipady = 580;
 		panelMain.add(panelGray, c);
