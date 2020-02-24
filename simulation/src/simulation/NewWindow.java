@@ -24,17 +24,19 @@ public class NewWindow {
 	private JPanel panelBlue, panelRed, panelGreen, panelGray, panelMain;
 	private JLabel[][] pokemonPictures;
 	private String[][] pokemonPicSource = {
-			{},
-			{},
-			{}
+			{"Scorbunny.png", "Charmander.png", "Vulpix.jpeg", "Torchic.jfif", "Fennekin.jfif", "Lampent.jfif", "Fletchinder.jfif", "Braixen.jfif", "Litten.png", "Victini.jfif"},
+			{"Bulbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
+			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
-	private JLabel image;
+	private String[][] pokemonNames;
 	
 	public NewWindow() {
 		frame = new JFrame("Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1540, 900);
 		frame.setLocationRelativeTo(null);
+		
+		pokemonNames = new String[3][10];
 		
 		panelMain = new JPanel(new GridBagLayout());
 		panelRed = new JPanel(new GridBagLayout());
@@ -45,7 +47,16 @@ public class NewWindow {
 		panelMain.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		image = new JLabel();
+		setPokemonChosen();
+		pokemonPictures = new JLabel[3][10];
+		
+		for(int x = 0; x < 3; x++) {
+			for(int y = 0; y < 10; y++) {
+				if(!pokemonPictures[x][y].equals("null")) {
+					pokemonPictures[x][y] = new JLabel();
+				}
+			}
+		}
 		
 		panelRed.setBackground(Color.red);
 		c.gridy = 0;
@@ -71,6 +82,15 @@ public class NewWindow {
 		
 		frame.setContentPane(panelMain);
 		frame.setVisible(true);
+	}
+	
+	public void setPokemonChosen() {
+		PokemonPicking pik = new PokemonPicking();
+		for(int x = 0; x < 3; x++) {
+			for(int y = 0; y < 10; y++) {
+				pokemonNames[x][y] = pik.returnPokemonNames(x, y);
+			}
+		}
 	}
 	
 

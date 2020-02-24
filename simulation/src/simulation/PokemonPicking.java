@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class PokemonPicking {
 	private String pokemonNameBank[][] = {
-			{"Skorbunny", "Charmander", "Vulpix", "Torchic", "Fennekin", "Lampent", "Fletchinder", "Braixen", "Litten", "Victini"},
+			{"Scorbunny", "Charmander", "Vulpix", "Torchic", "Fennekin", "Lampent", "Fletchinder", "Braixen", "Litten", "Victini"},
 			{"Bulbasaur", "Oddish", "Chickorita", "Cherubi", "Snivy", "Pansage", "Rowlett", "Skiddo", "Grookey", "Bounsweet"},
 			{"Squirtle", "Seel", "Vaporeon", "Totodile", "Omanyte", "Lotad", "Spheal", "Oshawott", "Ducklett", "Sobble"}
 	};
@@ -37,6 +37,10 @@ public class PokemonPicking {
 			}
 		}
 		System.out.println("\n");
+	}
+	
+	public String returnPokemonNames(int level, int pok) {
+		return pokemonNames[level][pok];
 	}
 	
 	/**
