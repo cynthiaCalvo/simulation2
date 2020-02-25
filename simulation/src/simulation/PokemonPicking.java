@@ -10,10 +10,12 @@ public class PokemonPicking {
 	};
 	private boolean noRepeats[][];
 	private String pokemonNames[][];
+	private int[][] randoPokemon;
 	
 	public PokemonPicking() {
 		pokemonNames = new String[3][10];
 		noRepeats = new boolean[3][10];
+		randoPokemon = new int[3][10];
 		/**will set the extra spots at the end(if there are any) to 
 		 * "null" so that it doesn't count them
 		 */
@@ -29,18 +31,19 @@ public class PokemonPicking {
 		int x = 0;
 		while(x < length) {
 			int rando = random.nextInt(10);
-			if(pokemonNames[level][x].equals("null") && noRepeats[level][rando] != true) {
+			if(pokemonNames[level][x].equals("nool") && noRepeats[level][rando] != true) {
 				pokemonNames[level][x] = pokemonNameBank[level][rando];
 				System.out.println(pokemonNames[level][x]);
 				noRepeats[level][rando] = true;
+				randoPokemon[level][x] = rando;
 				x++;
 			}
 		}
 		System.out.println("\n");
 	}
 	
-	public String returnPokemonNames(int level, int pok) {
-		return pokemonNames[level][pok];
+	public int returnRandoPokemon(int type, int pok) {
+		return randoPokemon[type][pok];
 	}
 	
 	/**
@@ -50,8 +53,12 @@ public class PokemonPicking {
 	public void resetPokemonNames() {
 		for(int x = 0; x < 3; x++) {
 			for(int y = 0; y < 10; y++) {
-				pokemonNames[x][y] = "null";
+				pokemonNames[x][y] = "nool";
 			}
 		}
+	}
+	
+	public String returnPokemonNames(int type, int pok) {
+		return pokemonNames[type][pok];
 	}
 }

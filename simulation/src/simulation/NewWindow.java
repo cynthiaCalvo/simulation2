@@ -1,23 +1,15 @@
 package simulation;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class NewWindow {
 	private JFrame frame;
@@ -28,35 +20,15 @@ public class NewWindow {
 			{"Bulbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
-	private String[][] pokemonNames;
+	GridBagConstraints c = new GridBagConstraints();
 	
-	public NewWindow() {
+	public void gui() {
 		frame = new JFrame("Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1540, 900);
 		frame.setLocationRelativeTo(null);
 		
-		pokemonNames = new String[3][10];
-		
-		panelMain = new JPanel(new GridBagLayout());
-		panelRed = new JPanel(new GridBagLayout());
-		panelGreen = new JPanel(new GridBagLayout());
-		panelBlue = new JPanel(new GridBagLayout());
-		panelGray = new JPanel(new GridBagLayout());
-		
 		panelMain.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		
-		setPokemonChosen();
-		pokemonPictures = new JLabel[3][10];
-		
-		for(int x = 0; x < 3; x++) {
-			for(int y = 0; y < 10; y++) {
-				if(!pokemonPictures[x][y].equals("null")) {
-					pokemonPictures[x][y] = new JLabel();
-				}
-			}
-		}
 		
 		panelRed.setBackground(Color.red);
 		c.gridy = 0;
@@ -74,8 +46,6 @@ public class NewWindow {
 		panelMain.add(panelBlue, c);
 		
 		panelGray.setBackground(Color.gray);
-		//image.setIcon(new ImageIcon("H:\\git\\simulation2\\simulation\\src\\simulation\\Images/Scorbunny.png"));
-		//panelGray.add(image);
 		c.gridy = 3;
 		c.ipady = 580;
 		panelMain.add(panelGray, c);
@@ -84,14 +54,32 @@ public class NewWindow {
 		frame.setVisible(true);
 	}
 	
-	public void setPokemonChosen() {
-		PokemonPicking pik = new PokemonPicking();
-		for(int x = 0; x < 3; x++) {
-			for(int y = 0; y < 10; y++) {
-				pokemonNames[x][y] = pik.returnPokemonNames(x, y);
+	public void addingPics(int x, int y, String name, int g) {
+		panelMain = new JPanel(new GridBagLayout());
+		panelRed = new JPanel(new GridBagLayout());
+		panelGreen = new JPanel(new GridBagLayout());
+		panelBlue = new JPanel(new GridBagLayout());
+		panelGray = new JPanel(new GridBagLayout());
+		pokemonPictures = new JLabel[3][10];
+
+		if(!name.equals("nool")) {
+			pokemonPictures[x][y] = new JLabel();
+			String source = "H:\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][g];
+			pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+			System.out.println(source);
+			
+			c.gridx = g;
+					
+			if(x == 0) {
+				panelRed.add(pokemonPictures[x][y], c);
+				System.out.println("red");
+			}else if(x == 1) {
+				panelGreen.add(pokemonPictures[x][y], c);
+				System.out.println("Green");
+			}else {
+				panelBlue.add(pokemonPictures[x][y], c);
+				System.out.println("Blue");
 			}
 		}
 	}
-	
-
 }

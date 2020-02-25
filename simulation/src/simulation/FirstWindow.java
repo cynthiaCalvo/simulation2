@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -20,6 +18,7 @@ public class FirstWindow implements ActionListener{
 	private JTextField[] choosePopulation;
 	private int[] pokemonNumbers;
 	private JButton button;
+	private boolean trigger;
 	
 	public FirstWindow() {
 		frame = new JFrame("Frame");
@@ -29,7 +28,6 @@ public class FirstWindow implements ActionListener{
 		
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		//put everything else here
 		
 		pokemonNumbers = new int[3];
 		button = new JButton("GO");
@@ -57,18 +55,24 @@ public class FirstWindow implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		String eventName = event.getActionCommand();
-		PokemonPicking back = new PokemonPicking();
-		
-		back.resetPokemonNames();
 		
 		if(eventName.equals("GO")) {
 			for(int i = 0; i < 3; i++) {
 				pokemonNumbers[i] = Integer.parseInt(choosePopulation[i].getText());
-				back.pickPokemonRandom(pokemonNumbers[i], i);
+				trigger = true;
 			}
-			NewWindow nw = new NewWindow();
 		}
-		
 	}
 	
+	public boolean returnTrigger() {
+		return trigger;
+	}
+	
+	public int returnPokemonNumbers(int i) {
+		if(trigger) {
+			return pokemonNumbers[i];
+		}else {
+			return 25;
+		}
+	}
 }
