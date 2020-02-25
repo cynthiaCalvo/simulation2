@@ -18,11 +18,14 @@ public class TestingClass {
 		}
 		
 		NewWindow nw = new NewWindow();
+		nw.setRandoAndName();
 		for(int h = 0; h < 3; h++) {
 			for(int g = 0; g < 10; g++) {
-				nw.addingPics(h, g, back.returnPokemonNames(h, g), back.returnRandoPokemon(h, g));
+				nw.grabPokemonNames(back.returnPokemonNames(h, g), h, g);
+				nw.grabRandoPokemon(back.returnRandoPokemon(h, g), h, g);
 			}
 		}
 		nw.gui();
+		
 	}
 }

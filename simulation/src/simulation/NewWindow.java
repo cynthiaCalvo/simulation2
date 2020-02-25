@@ -16,11 +16,12 @@ public class NewWindow {
 	private JPanel panelBlue, panelRed, panelGreen, panelGray, panelMain;
 	private JLabel[][] pokemonPictures;
 	private String[][] pokemonPicSource = {
-			{"Scorbunny.png", "Charmander.png", "Vulpix.jpeg", "Torchic.jfif", "Fennekin.jfif", "Lampent.jfif", "Fletchinder.jfif", "Braixen.jfif", "Litten.png", "Victini.jfif"},
-			{"Bulbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
+			{"Scorbunny.png", "Charmander.png", "Vulpix.jpg", "Torchic.jfif", "Fennekin.jfif", "Lampent.jfif", "Fletchinder.jfif", "Braixen.jfif", "Litten.png", "Victini.jfif"},
+			{"Balbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
-	GridBagConstraints c = new GridBagConstraints();
+	private String[][] name;
+	private int[][] rando;
 	
 	public void gui() {
 		frame = new JFrame("Frame");
@@ -28,12 +29,44 @@ public class NewWindow {
 		frame.setSize(1540, 900);
 		frame.setLocationRelativeTo(null);
 		
+		panelMain = new JPanel(new GridBagLayout());
+		panelRed = new JPanel(new GridBagLayout());
+		panelGreen = new JPanel(new GridBagLayout());
+		panelBlue = new JPanel(new GridBagLayout());
+		panelGray = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
 		panelMain.setLayout(new GridBagLayout());
+		
+		pokemonPictures = new JLabel[3][10];
+		
+		for(int x = 0; x < 3; x++) {
+			for(int y = 0; y < 10; y++) {
+
+				if(!name[x][y].equals("nool")) {
+					pokemonPictures[x][y] = new JLabel();
+					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
+					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+					System.out.println(source);
+					c.gridx = y;
+					c.insets = new Insets(0, 5, 0, 0);
+					if(x == 0) {
+						panelRed.add(pokemonPictures[x][y], c);
+					}else if(x == 1) {
+						panelGreen.add(pokemonPictures[x][y], c);
+					}else {
+						panelBlue.add(pokemonPictures[x][y], c);
+					}
+				}
+				
+			}
+			System.out.println("\n");
+		}
 		
 		panelRed.setBackground(Color.red);
 		c.gridy = 0;
 		c.ipadx = 1540;
-		c.ipady = 70;
+		c.ipady = 20;
 		c.insets = new Insets(10,0,0,0);
 		panelMain.add(panelRed, c);
 		
@@ -47,39 +80,23 @@ public class NewWindow {
 		
 		panelGray.setBackground(Color.gray);
 		c.gridy = 3;
-		c.ipady = 580;
+		c.ipady = 550;
 		panelMain.add(panelGray, c);
 		
 		frame.setContentPane(panelMain);
 		frame.setVisible(true);
 	}
 	
-	public void addingPics(int x, int y, String name, int g) {
-		panelMain = new JPanel(new GridBagLayout());
-		panelRed = new JPanel(new GridBagLayout());
-		panelGreen = new JPanel(new GridBagLayout());
-		panelBlue = new JPanel(new GridBagLayout());
-		panelGray = new JPanel(new GridBagLayout());
-		pokemonPictures = new JLabel[3][10];
-
-		if(!name.equals("nool")) {
-			pokemonPictures[x][y] = new JLabel();
-			String source = "H:\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][g];
-			pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
-			System.out.println(source);
-			
-			c.gridx = g;
-					
-			if(x == 0) {
-				panelRed.add(pokemonPictures[x][y], c);
-				System.out.println("red");
-			}else if(x == 1) {
-				panelGreen.add(pokemonPictures[x][y], c);
-				System.out.println("Green");
-			}else {
-				panelBlue.add(pokemonPictures[x][y], c);
-				System.out.println("Blue");
-			}
-		}
+	public void grabPokemonNames(String grab, int type, int pok) {
+		name[type][pok] = grab;
+	}
+	
+	public void grabRandoPokemon(int grab, int type, int pok) {
+		rando[type][pok] = grab;
+	}
+	
+	public void setRandoAndName() {
+		name = new String[3][10];
+		rando = new int[3][10];
 	}
 }
