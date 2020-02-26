@@ -20,4 +20,4 @@ public class Battle {
 		
 		return 0; //placeholder rn
 	}
-}
+} //test 2
