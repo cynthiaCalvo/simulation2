@@ -99,6 +99,8 @@ public class FirstWindow implements ActionListener{
 	
 	/**
 	 * will allow the TestingClass to stop opening the new window until user has pressed the GO button
+	 * 
+	 * very important do not remove
 	 * @return
 	 */
 	public boolean returnTrigger() {
