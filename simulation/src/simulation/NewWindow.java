@@ -13,7 +13,8 @@ import javax.swing.JPanel;
 
 public class NewWindow {
 	private JFrame frame;
-	private JPanel panelBlue, panelRed, panelGreen, panelGray, panelMain;
+	private JPanel[] panelColour;
+	private JPanel panelGray, panelMain;
 	private JLabel[][] pokemonPictures;
 	private String[][] pokemonPicSource = {
 			{"Scorbunny.png", "Charmander.png", "Vulpix.jpg", "Torchic.jfif", "Fennekin.jfif", "Lampent.jfif", "Fletchinder.jfif", "Braixen.jfif", "Litten.png", "Victini.jfif"},
@@ -37,14 +38,12 @@ public class NewWindow {
 		frame.setLocationRelativeTo(null);
 		
 		panelMain = new JPanel(new GridBagLayout());
-		panelRed = new JPanel(new GridBagLayout());
-		panelGreen = new JPanel(new GridBagLayout());
-		panelBlue = new JPanel(new GridBagLayout());
 		panelGray = new JPanel(new GridBagLayout());
+		panelMain.setLayout(new GridBagLayout());
+		
+		panelColour = new JPanel[3];
 		
 		GridBagConstraints c = new GridBagConstraints();
-		
-		panelMain.setLayout(new GridBagLayout());
 		
 		String[] typeLabelString = {"FIRE", "GRASS", "WATER"};
 		typeLabel = new JLabel[3];
@@ -52,17 +51,13 @@ public class NewWindow {
 		pokemonPictures = new JLabel[3][10];
 		
 		for(int x = 0; x < 3; x++) {
+			panelColour[x] = new JPanel(new GridBagLayout());
 			typeLabel[x] = new JLabel(typeLabelString[x]);
 			c.gridy = x;
 			c.gridx = 0;
 			c.insets = new Insets(0, 0, 0, 50);
 			typeLabel[x].setForeground(Color.black);
-			switch(x) {
-			case 0: panelRed.add(typeLabel[x], c);break;
-			case 1: panelGreen.add(typeLabel[x], c);break;
-			case 2: panelBlue.add(typeLabel[x], c);break;
-			default: System.out.println("It doesn't work");
-			}
+			panelColour[x].add(typeLabel[x], c);
 			for(int y = 0; y < 10; y++) {
 				//will only go through if there is a pokemon set to that spot
 				if(!name[x][y].equals("nool")) {
@@ -73,32 +68,27 @@ public class NewWindow {
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
 					//adds the label/picture to the correct panel
-					switch(x) {
-					case 0:panelRed.add(pokemonPictures[x][y], c);break;
-					case 1:panelGreen.add(pokemonPictures[x][y], c);break;
-					case 2:panelBlue.add(pokemonPictures[x][y], c);break;
-					default: System.out.println("It doesn't work");
-					}
+					panelColour[x].add(pokemonPictures[x][y], c);
 				}
 				
 			}
 			System.out.println("\n");
 		}
 		
-		panelRed.setBackground(Color.red);
+		panelColour[0].setBackground(Color.red);
 		c.gridy = 0;
 		c.ipadx = 1540;
 		c.ipady = 20;
 		c.insets = new Insets(10,0,0,0);
-		panelMain.add(panelRed, c);
+		panelMain.add(panelColour[0], c);
 		
-		panelGreen.setBackground(Color.green);
+		panelColour[1].setBackground(Color.green);
 		c.gridy = 1;
-		panelMain.add(panelGreen, c);
+		panelMain.add(panelColour[1], c);
 		
-		panelBlue.setBackground(Color.blue);
+		panelColour[2].setBackground(Color.blue);
 		c.gridy = 2;
-		panelMain.add(panelBlue, c);
+		panelMain.add(panelColour[2], c);
 		
 		panelGray.setBackground(Color.gray);
 		c.gridy = 3;
