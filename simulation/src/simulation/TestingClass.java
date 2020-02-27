@@ -28,6 +28,7 @@ public class TestingClass {
 				nw.grabRandoPokemon(back.returnRandoPokemon(h, g), h, g);
 			}
 		}
+		
 		//will pop up the new window
 		nw.gui();
 		

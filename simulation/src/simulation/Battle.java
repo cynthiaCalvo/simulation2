@@ -9,23 +9,78 @@ public class Battle {
 			{"Bullet seed", "Energy ball", "Leaf blade", "Petal dance", "Razor leaf"}, //grass moves
 			{"Aqua jet", "Bubble", "Hydro vortex", "Whirlpool", "Splishy splash", }, //water moves
 	};
+	private String pokemonNameBank[][] = {
+			{"Scorbunny", "Charmander", "Vulpix", "Torchic", "Fennekin", "Lampent", "Fletchinder", "Braixen", "Litten", "Victini"},
+			{"Bulbasaur", "Oddish", "Chickorita", "Cherubi", "Snivy", "Pansage", "Rowlett", "Skiddo", "Grookey", "Bounsweet"},
+			{"Squirtle", "Seel", "Vaporeon", "Totodile", "Omanyte", "Lotad", "Spheal", "Oshawott", "Ducklett", "Sobble"}
+	};
 	
 	/*
 	 * Randomly selects the pokemon to be used in battle
+	 * 0 is fire
+	 * 1 is grass
+	 * 2 is water
 	 */
-	// public int pokemonSelector() {
-	//	Random r = new Random();
-	//	int pokemon, type;
+	 public String pokemonSelector(int type, int available) { //collects the type chosen to fight, as well as the available pokemon to choose from
+		Random r = new Random();
+		int pokemonRandom = 0;
+		String pokemonSelected = null;
 		
-	//	pokemon = r.nextInt(10); //selects a random number between 0-9 to return to the main
+		if(type == 0) { //selects an available fire pokemon
+			switch(available) {
+			case 0: pokemonRandom = r.nextInt(10);break;
+			case 1: pokemonRandom = r.nextInt(9);break;
+			case 2: pokemonRandom = r.nextInt(8);break;
+			case 3: pokemonRandom = r.nextInt(7);break;
+			case 4: pokemonRandom = r.nextInt(6);break;
+			case 5: pokemonRandom = r.nextInt(5);break;
+			case 6: pokemonRandom = r.nextInt(4);break;
+			case 7: pokemonRandom = r.nextInt(3);break;
+			case 8: pokemonRandom = r.nextInt(2);break;
+			case 9: pokemonRandom = r.nextInt(1);break;
+			default: //I presume I can leave this blank and then it won't do anything
+			}
+			//Now that I have the randomly selected pokemon number, plug it into the array and return it here
+			
+			
+		}else if(type == 1) { //water pokemon
+			switch(available) {
+			case 0: pokemonRandom = r.nextInt(10);break;
+			case 1: pokemonRandom = r.nextInt(9);break;
+			case 2: pokemonRandom = r.nextInt(8);break;
+			case 3: pokemonRandom = r.nextInt(7);break;
+			case 4: pokemonRandom = r.nextInt(6);break;
+			case 5: pokemonRandom = r.nextInt(5);break;
+			case 6: pokemonRandom = r.nextInt(4);break;
+			case 7: pokemonRandom = r.nextInt(3);break;
+			case 8: pokemonRandom = r.nextInt(2);break;
+			case 9: pokemonRandom = r.nextInt(1);break;
+			default:
+			}
+			
+			
+			
+		}else if(type == 2) { //water pokemon
+			switch(available) {
+			case 0: pokemonRandom = r.nextInt(10);break;
+			case 1: pokemonRandom = r.nextInt(9);break;
+			case 2: pokemonRandom = r.nextInt(8);break;
+			case 3: pokemonRandom = r.nextInt(7);break;
+			case 4: pokemonRandom = r.nextInt(6);break;
+			case 5: pokemonRandom = r.nextInt(5);break;
+			case 6: pokemonRandom = r.nextInt(4);break;
+			case 7: pokemonRandom = r.nextInt(3);break;
+			case 8: pokemonRandom = r.nextInt(2);break;
+			case 9: pokemonRandom = r.nextInt(1);break;
+			default:
+			}
+			
+			
+			
+		}
 		
-	//	type = r.nextInt(3); //selects a random number between 0-2 to return to the main branch to 
-		
-	//	return 0; //placeholder rn
-	//}
-	/*
-	 * I made all of this a comment because I think you've already made a program for this
-	 */
+		return pokemonSelected;
+	}
 	
 	/*
 	 * Chooses a move for the pokemon to use based on it's type.
