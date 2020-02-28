@@ -3,6 +3,8 @@ package simulation;
 public class TestingClass {
 
 	public static void main(String[] args) {
+		int[] population = new int[3];
+				
 		FirstWindow test = new FirstWindow();
 		PokemonPicking back = new PokemonPicking();
 		back.resetPokemonNames();
@@ -17,6 +19,10 @@ public class TestingClass {
 			if(test.returnPokemonNumbers(x) != 25) {
 				back.pickPokemonRandom(test.returnPokemonNumbers(x), x);
 			}
+		}
+		
+		for(int t=0; t<3; t++) {
+			population[t] = test.returnPokemonNumbers(t);
 		}
 		
 		NewWindow nw = new NewWindow();
