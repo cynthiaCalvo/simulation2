@@ -22,7 +22,13 @@ public class Battle {
 	 * 2 is water
 	 */
 	 public String pokemonSelector(int type, int available) { //collects the type chosen to fight, as well as the available pokemon to choose from
-		Random r = new Random();
+		/**
+		 * i have a few questions about how this will work:
+		 * what is the variable: available? what value is this?
+		 * where are you getting the type from?
+		 * how will the switch statements work? I'm not understanding the relationship between the case # and the # you're randomly choosing from(r.nextInt(#))
+		 */
+		 Random r = new Random();
 		int pokemonRandom = 0;
 		String pokemonSelected = null;
 		
@@ -60,7 +66,7 @@ public class Battle {
 			
 			
 			
-		}else if(type == 2) { //water pokemon
+		}else if(type == 2) { //water pokemon - ******this should just be an else - or you can have a println like "this doesn't work" for the else, but it needs an else part of the if statement
 			switch(available) {
 			case 0: pokemonRandom = r.nextInt(10);break;
 			case 1: pokemonRandom = r.nextInt(9);break;
