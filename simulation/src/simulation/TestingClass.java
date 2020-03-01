@@ -35,7 +35,7 @@ public class TestingClass {
 			}
 		}
 		
-		//will pop up the new window
+		//will pop up the new window 
 		nw.gui();
 
 		Battle battle = new Battle();
