@@ -79,4 +79,8 @@ public class PokemonPicking {
 	public String returnPokemonNames(int type, int pok) {
 		return pokemonNames[type][pok];
 	}
+	
+	public String returnPokemonNameBank(int type, int pok) {
+		return pokemonNameBank[type][pok];
+	}
 }

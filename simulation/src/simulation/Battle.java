@@ -9,11 +9,17 @@ public class Battle {
 			{"Bullet seed", "Energy ball", "Leaf blade", "Petal dance", "Razor leaf"}, //grass moves
 			{"Aqua jet", "Bubble", "Hydro vortex", "Whirlpool", "Splishy splash", }, //water moves
 	};
-	private String pokemonNameBank[][] = {
-			{"Scorbunny", "Charmander", "Vulpix", "Torchic", "Fennekin", "Lampent", "Fletchinder", "Braixen", "Litten", "Victini"},
-			{"Bulbasaur", "Oddish", "Chickorita", "Cherubi", "Snivy", "Pansage", "Rowlett", "Skiddo", "Grookey", "Bounsweet"},
-			{"Squirtle", "Seel", "Vaporeon", "Totodile", "Omanyte", "Lotad", "Spheal", "Oshawott", "Ducklett", "Sobble"}
-	};
+	private String pokemonNameBank[][];
+	
+
+	public void setPokemonNameBankLength() {
+		pokemonNameBank = new String[3][10];
+	}
+	
+	public void setPokemonNameBankValues(String name, int type, int pok) {
+		pokemonNameBank[type][pok] = name;
+	}
+	
 	
 	/*
 	 * Randomly selects the pokemon to be used in battle
