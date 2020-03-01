@@ -37,6 +37,14 @@ public class TestingClass {
 		
 		//will pop up the new window
 		nw.gui();
+
+		Battle battle = new Battle();
+		battle.setPokemonNameBankLength();
+		for(int x = 0; x < 3; x++) {
+			for(int y = 0; y < 10; y++) {
+				battle.setPokemonNameBankValues(back.returnPokemonNameBank(x, y), x, y);
+			}
+		}
 		
 	}
 }
