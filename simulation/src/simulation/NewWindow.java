@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Insets;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ public class NewWindow {
 			{"Balbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
+	private JButton start, nextAttack;
 	private JLabel[] typeLabel;
 	//will store the names of the pokemon chosen
 	private String[][] name;
@@ -60,11 +62,13 @@ public class NewWindow {
 			panelColour[x].add(typeLabel[x], c);
 			for(int y = 0; y < 10; y++) {
 				//will only go through if there is a pokemon set to that spot
+				//@school: H:/git/simulation2/simulation/src/simulation/Images/
+				//@home computer b/c source is different: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
 					//will set the source for the pokemon pictures so they can be added to the label
-					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
-					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(75, 75, Image.SCALE_DEFAULT)));
+					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
+					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
 					//adds the label/picture to the correct panel
@@ -74,6 +78,9 @@ public class NewWindow {
 			}
 			System.out.println("\n");
 		}
+		
+		start = new JButton("START");
+		
 		
 		panelColour[0].setBackground(Color.red);
 		c.gridy = 0;
@@ -92,7 +99,7 @@ public class NewWindow {
 		
 		panelGray.setBackground(Color.gray);
 		c.gridy = 3;
-		c.ipady = 550;
+		c.ipady = 475;
 		panelMain.add(panelGray, c);
 		
 		frame.setContentPane(panelMain);
