@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,12 +24,14 @@ public class NewWindow {
 			{"Balbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
-	private JButton start, nextAttack;
+	private JButton start, nextAttack, nextBattle;
 	private JLabel[] typeLabel;
 	//will store the names of the pokemon chosen
 	private String[][] name;
 	//will store the y position from the pokemonNameBank from PokemonPicking for the position in the chosen pokemon array
 	private int[][] rando;
+	private int pokemonSelectedX, pokemonSelectedY;
+	private boolean triggerStart;
 	
 	/**
 	 * gui() method cannot be a class method b/c it needs to be called after the other methods to set the data in arrays
@@ -67,7 +71,7 @@ public class NewWindow {
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
 					//will set the source for the pokemon pictures so they can be added to the label
-					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -80,7 +84,36 @@ public class NewWindow {
 		}
 		
 		start = new JButton("START");
+		start.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				triggerStart = true;
+			}
+			
+		});
 		
+		nextAttack = new JButton("NEXT ATTACK");//will have to loop until one pokemon is dead - need health for that tho
+		nextAttack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//will implement the next attack
+				//also will need to change stats
+			}
+			
+		});
+		
+		nextBattle = new JButton("NEXT BATTLE");
+		nextBattle.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//will switch the pictures and stats on screen
+				
+			}
+			
+		});
 		
 		panelColour[0].setBackground(Color.red);
 		c.gridy = 0;
@@ -139,5 +172,14 @@ public class NewWindow {
 	public void setRandoAndName() {
 		name = new String[3][10];
 		rando = new int[3][10];
+	}
+	
+	public void grabPokemonSelector(String xy) {
+		pokemonSelectedX = Integer.parseInt(xy.substring(0, 1));
+		pokemonSelectedY = Integer.parseInt(xy.substring(1, 2));
+	}
+	
+	public boolean returnTriggerStart() {
+		return triggerStart;
 	}
 }

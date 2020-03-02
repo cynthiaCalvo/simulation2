@@ -1,8 +1,11 @@
 package simulation;
 
+import java.util.Random;
+
 public class TestingClass {
 
 	public static void main(String[] args) {
+		Random r = new Random();
 		int[] population = new int[3];
 				
 		FirstWindow test = new FirstWindow();
@@ -34,17 +37,16 @@ public class TestingClass {
 				nw.grabRandoPokemon(back.returnRandoPokemon(h, g), h, g);
 			}
 		}
-		
 		//will pop up the new window 
 		nw.gui();
 
 		Battle battle = new Battle();
-		battle.setPokemonNameBankLength();
-		for(int x = 0; x < 3; x++) {
-			for(int y = 0; y < 10; y++) {
-				battle.setPokemonNameBankValues(back.returnPokemonNameBank(x, y), x, y);
-			}
+		while(!nw.returnTriggerStart()) {
+			System.out.print("");
 		}
+		//I need to work on this piece so that it grabs new pokemon everytime the user clicks the "NEXT BATTLE" button - which has not been made yet
+		int type = r.nextInt(3);
+		nw.grabPokemonSelector(battle.pokemonSelector(population[type], type));
 		
 	}
 }
