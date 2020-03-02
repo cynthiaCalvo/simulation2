@@ -36,7 +36,7 @@ public class Battle {
 		default:
 		}
 		
-		pokemonSelected = Integer.toString(type) + Integer.toString(pokemonRandom);//I switched this from returning the name to the coordinates - which makes it easier for me to use
+		pokemonSelected = Integer.toString(type) + Integer.toString(pokemonRandom);// I switched this from returning the name to the coordinates - which makes it easier for me to use
 		
 		return pokemonSelected;
 	}
