@@ -99,6 +99,7 @@ public class NewWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//will implement the next attack
+				//also will need to change stats
 			}
 			
 		});
@@ -107,8 +108,8 @@ public class NewWindow {
 		nextBattle.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+			public void actionPerformed(ActionEvent e) {
+				//will switch the pictures and stats on screen
 				
 			}
 			
