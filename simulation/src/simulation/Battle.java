@@ -16,12 +16,11 @@ public class Battle {
 	 * 1 is grass
 	 * 2 is water
 	 */
-	 public String pokemonSelector(int population) { //collects the type chosen to fight, as well as the available pokemon to choose from
+	 public String pokemonSelector(int population, int type) { //collects the type chosen to fight, as well as the available pokemon to choose from
 		//I had the choosing a type of pokemon moved to the main class b/c we were trying to grab the population of a type we hadn't even chosen yet
-		 Random r = new Random();
-		int pokemonRandom = 0, type;
+		Random r = new Random();
+		 int pokemonRandom = 0;
 		String pokemonSelected = null;
-		type = r.nextInt(3);
 		
 		switch(population) {
 		case 0: pokemonRandom = r.nextInt(1);break;
