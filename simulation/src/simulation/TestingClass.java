@@ -1,52 +1,44 @@
 package simulation;
 
-import java.util.Random;
-
 public class TestingClass {
 
 	public static void main(String[] args) {
-		Random r = new Random();
 		int[] population = new int[3];
 				
-		FirstWindow test = new FirstWindow();
-		PokemonPicking back = new PokemonPicking();
-		back.resetPokemonNames();
+		FirstWindow fw = new FirstWindow();
+		PokemonPicking picking = new PokemonPicking();
+		picking.resetPokemonNames();
 		
 		//will wait until the user presses the GO button to initiate the other window
-		while(!test.returnTrigger()) {
+		while(!fw.returnTrigger()) {
 			System.out.print("");
 		}
 		
 		//will grab values from FirstWindow and send them to PokemonPicking
 		for(int x = 0; x < 3; x++) {
-			if(test.returnPokemonNumbers(x) != 25) {
-				back.pickPokemonRandom(test.returnPokemonNumbers(x), x);
+			if(fw.returnPokemonNumbers(x) != 25) {
+				picking.pickPokemonRandom(fw.returnPokemonNumbers(x), x);
 			}
 		}
-		
 		for(int t=0; t<3; t++) {
-			population[t] = test.returnPokemonNumbers(t);
+			population[t] = fw.returnPokemonNumbers(t);
 		}
-		
 		NewWindow nw = new NewWindow();
 		nw.setRandoAndName();
+		
 		//will grab values from PokemonPicking and send them to NewWindow
 		for(int h = 0; h < 3; h++) {
 			for(int g = 0; g < 10; g++) {
-				nw.grabPokemonNames(back.returnPokemonNames(h, g), h, g);
-				nw.grabRandoPokemon(back.returnRandoPokemon(h, g), h, g);
+				nw.grabPokemonNames(picking.returnPokemonNames(h, g), h, g);
+				nw.grabRandoPokemon(picking.returnRandoPokemon(h, g), h, g);
 			}
 		}
+		
 		//will pop up the new window 
 		nw.gui();
 
-		Battle battle = new Battle();
-		while(!nw.returnTriggerStart()) {
-			System.out.print("");
+		for(int v = 0; v < 3; v++) {
+			nw.grabPopulation(v, population[v]);
 		}
-		//I need to work on this piece so that it grabs new pokemon everytime the user clicks the "NEXT BATTLE" button - which has not been made yet
-		int type = r.nextInt(3);
-		nw.grabPokemonSelector(battle.pokemonSelector(population[type], type));
-		
 	}
 }

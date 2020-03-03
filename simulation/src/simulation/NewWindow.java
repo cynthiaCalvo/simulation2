@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,14 +25,15 @@ public class NewWindow {
 			{"Balbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
-	private JButton start, nextAttack, nextBattle;
+	private JButton nextAttack, nextBattle;
 	private JLabel[] typeLabel;
 	//will store the names of the pokemon chosen
 	private String[][] name;
 	//will store the y position from the pokemonNameBank from PokemonPicking for the position in the chosen pokemon array
 	private int[][] rando;
-	private int pokemonSelectedX, pokemonSelectedY;
-	private boolean triggerStart;
+	private int[] pokemonChosenY;
+	private JLabel[] pokemonBattle;
+	private int[] population;
 	
 	/**
 	 * gui() method cannot be a class method b/c it needs to be called after the other methods to set the data in arrays
@@ -82,38 +84,54 @@ public class NewWindow {
 			}
 			System.out.println("\n");
 		}
-		
-		start = new JButton("START");
-		start.addActionListener(new ActionListener() {
+		pokemonBattle = new JLabel[2];
+		population = new int[3];
+		pokemonChosenY = new int[2];
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				triggerStart = true;
-			}
-			
-		});
-		
-		nextAttack = new JButton("NEXT ATTACK");//will have to loop until one pokemon is dead - need health for that tho
-		nextAttack.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//will implement the next attack
-				//also will need to change stats
-			}
-			
-		});
-		
 		nextBattle = new JButton("NEXT BATTLE");
+		Battle battle = new Battle();
 		nextBattle.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//will switch the pictures and stats on screen
-				
+				Random r = new Random();
+				String source;
+				int type;
+				for(int i = 0; i < 2; i++) {
+					type = r.nextInt(3);
+					pokemonChosenY[i] = Integer.parseInt(battle.pokemonSelector(population[type], type));
+					source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[type][pokemonChosenY[i]];
+					System.out.println(source);
+					pokemonBattle[i] = new JLabel();
+					pokemonBattle[i].setIcon(new ImageIcon(source));
+					c.gridy = 0;
+					c.gridx = i;
+					panelGray.add(pokemonBattle[i], c);
+				}
 			}
-			
 		});
+		c.gridy = 2;
+		c.gridx = 0;
+		panelGray.add(nextBattle, c);//have not able to click until health is @ 0
+		
+		nextAttack = new JButton("NEXT ATTACK");
+		int health = 0;//placeholder until I get health 
+		while(health > 0) {//will have to loop until one pokemon is dead - need health for that tho
+			nextAttack.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					//will implement the next attack
+					//also will need to change stats
+				}
+				
+			});
+		}
+		c.gridy = 2;
+		c.gridx = 1;
+		panelGray.add(nextAttack, c);//have not able to click after health is @ 0
+		
 		
 		panelColour[0].setBackground(Color.red);
 		c.gridy = 0;
@@ -174,12 +192,7 @@ public class NewWindow {
 		rando = new int[3][10];
 	}
 	
-	public void grabPokemonSelector(String xy) {
-		pokemonSelectedX = Integer.parseInt(xy.substring(0, 1));
-		pokemonSelectedY = Integer.parseInt(xy.substring(1, 2));
-	}
-	
-	public boolean returnTriggerStart() {
-		return triggerStart;
+	public void grabPopulation(int type, int pop) {
+		population[type] = pop;
 	}
 }

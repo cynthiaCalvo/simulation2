@@ -19,8 +19,8 @@ public class Battle {
 	 public String pokemonSelector(int population, int type) { //collects the type chosen to fight, as well as the available pokemon to choose from
 		//I had the choosing a type of pokemon moved to the main class b/c we were trying to grab the population of a type we hadn't even chosen yet
 		Random r = new Random();
-		 int pokemonRandom = 0;
-		String pokemonSelected = null;
+		int pokemonRandom = 0;
+		String pokemonSelected;
 		
 		switch(population) {
 		case 0: pokemonRandom = r.nextInt(1);break;
@@ -36,7 +36,7 @@ public class Battle {
 		default:
 		}
 		
-		pokemonSelected = Integer.toString(type) + Integer.toString(pokemonRandom);// I switched this from returning the name to the coordinates - which makes it easier for me to use
+		pokemonSelected = Integer.toString(pokemonRandom);// I switched this from returning the name to the coordinates - which makes it easier for me to use
 		
 		return pokemonSelected;
 	}
