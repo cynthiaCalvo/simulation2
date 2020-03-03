@@ -80,9 +80,7 @@ public class NewWindow {
 					//adds the label/picture to the correct panel
 					panelColour[x].add(pokemonPictures[x][y], c);
 				}
-				
 			}
-			System.out.println("\n");
 		}
 		pokemonBattle = new JLabel[2];
 		population = new int[3];
@@ -94,7 +92,6 @@ public class NewWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//will switch the pictures and stats on screen
 				Random r = new Random();
 				String source;
 				int type;
@@ -103,8 +100,9 @@ public class NewWindow {
 					pokemonChosenY[i] = Integer.parseInt(battle.pokemonSelector(population[type], type));
 					source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[type][pokemonChosenY[i]];
 					System.out.println(source);
+					
 					pokemonBattle[i] = new JLabel();
-					pokemonBattle[i].setIcon(new ImageIcon(source));
+					pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridy = 0;
 					c.gridx = i;
 					panelGray.add(pokemonBattle[i], c);
