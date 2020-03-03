@@ -1,3 +1,7 @@
+/**
+ * David Sawatzky
+ * I made this a while ago so I don't know the exact date lol
+ */
 package simulation; 
 
 import java.util.Random;
@@ -7,8 +11,15 @@ public class Battle {
 	private String pokemonMoves[][] = {
 			{"Fire punch", "Flamethrower", "Heat crash", "Inferno", "Incinerate"}, //fire moves
 			{"Bullet seed", "Energy ball", "Leaf blade", "Petal dance", "Razor leaf"}, //grass moves
-			{"Aqua jet", "Bubble", "Hydro vortex", "Whirlpool", "Splishy splash", }, //water moves
+			{"Aqua jet", "Bubble", "Hydro vortex", "Whirlpool", "Splishy splash"}, //water moves
 	};
+	
+	private int pokemonMoveValues[][] = {
+			{4, 3, 2, 6, 8}, //fire moves
+			{3, 4, 5, 2, 7}, //grass moves
+			{2, 6, 4, 5, 8}, //water moves
+	};
+	
 	
 	/*
 	 * Randomly selects the pokemon to be used in battle
@@ -39,7 +50,7 @@ public class Battle {
 		pokemonSelected = Integer.toString(pokemonRandom);// I switched this from returning the name to the coordinates - which makes it easier for me to use
 		
 		return pokemonSelected;
-	}
+	}//done
 	
 	/*
 	 * Chooses a move for the pokemon to use based on it's type.
@@ -53,14 +64,14 @@ public class Battle {
 		String attack = null;
 		
 		switch(type) {
-		case 0: randomAttack = r.nextInt(4); System.out.println(randomAttack); attack = "hi";break; //fire attacks (hi is a placeholder to see if things work)
-		case 1: randomAttack = r.nextInt(4); //grass attacks
-		case 2: randomAttack = r.nextInt(4); //water attacks
+		case 0: randomAttack = r.nextInt(4); attack = pokemonMoves[0][randomAttack];break; //fire attacks
+		case 1: randomAttack = r.nextInt(4); attack = pokemonMoves[1][randomAttack];break; //grass attacks
+		case 2: randomAttack = r.nextInt(4); attack = pokemonMoves[2][randomAttack];break; //water attacks
 		default: System.out.println("Error: Type not specified in Battle.java");
 		}
 		
-		return attack; //placeholder
-	}
+		return attack; 
+	} //done
 	
 	/*
 	 * Collects the input and assaigns a variety of levels to the pokemon.
@@ -81,7 +92,7 @@ public class Battle {
 		}
 		
 		return lvl;
-	}
+	} //done
 	
 	/*
 	 * Will store/ask for variables determining how much HP the pokemon have. 
@@ -99,5 +110,14 @@ public class Battle {
 		
 		
 		return 0;
+	}
+	
+	/*
+	 * Deals with assigning a chance for AN attack to do double dablage
+	 */
+	public int dailyDoubleChance() {
+		
+		
+		return 0; //placeholder
 	}
 }
