@@ -27,8 +27,7 @@ public class Battle {
 	 * 1 is grass
 	 * 2 is water
 	 */
-	 public String pokemonSelector(int population, int type) { //collects the type chosen to fight, as well as the available pokemon to choose from
-		//I had the choosing a type of pokemon moved to the main class b/c we were trying to grab the population of a type we hadn't even chosen yet
+	 public String pokemonSelector(int population, int type) { //collects the available pokemon to choose from
 		Random r = new Random();
 		int pokemonRandom = 0;
 		String pokemonSelected;
@@ -98,20 +97,48 @@ public class Battle {
 	/*
 	 * Will store/ask for variables determining how much HP the pokemon have. 
 	 */
-	public int hpGen() {
+	public double hpGen(int lvl) {
+		double health  = 20;
 		
+		switch(lvl) {
+		case 1: health = health*1;break;
+		case 2: health = health*1.2;break;
+		case 3: health = health*1.4;break;
+		case 4: health = health*1.6;break;
+		case 5: health = health*1.8;break;
+		case 6: health = health*2;break;
+		case 7: health = health*2.2;break;
+		case 8: health = health*2.4;break;
+		case 9: health = health*2.6;break;
+		case 10: health = health*2.8;break;
+		default: System.out.println("Error in hpGen");
+		}
 		
-		return 0;
-	}
+		return health;
+	} //done??
 	
 	/*
 	 * Will determine how strong the attack of a particular pokemon is
 	 */
-	public int apGen(int lvl) {
+	public double apGen(int lvl, int atkValue) { //lvl is self explanitory, atkValue is the base damage of the generated attack
+		double atk = 20;
 		
+		switch(lvl) {
+		case 1: atk = atkValue*1;break;
+		case 2: atk = atkValue*1.2;break;
+		case 3: atk = atkValue*1.4;break;
+		case 4: atk = atkValue*1.6;break;
+		case 5: atk = atkValue*1.8;break;
+		case 6: atk = atkValue*2;break;
+		case 7: atk = atkValue*2.2;break;
+		case 8: atk = atkValue*2.4;break;
+		case 9: atk = atkValue*2.6;break;
+		case 10: atk = atkValue*2.8;break;
+		default: System.out.println("Error in apGen");
+		}
 		
-		return 0;
-	}
+		return atk;
+	} //done?
 	
 	/*
 	 * Deals with assigning a chance for AN attack to do double dablage
