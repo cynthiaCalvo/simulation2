@@ -22,7 +22,7 @@ public class NewWindow {
 	private JLabel[][] pokemonPictures;
 	private String[][] pokemonPicSource = {
 			{"Scorbunny.png", "Charmander.png", "Vulpix.jpg", "Torchic.jfif", "Fennekin.jfif", "Lampent.jfif", "Fletchinder.jfif", "Braixen.jfif", "Litten.png", "Victini.jfif"},
-			{"Balbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
+			{"Bulbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
 	private JButton nextAttack, nextBattle;
@@ -31,7 +31,6 @@ public class NewWindow {
 	private String[][] name;
 	//will store the y position from the pokemonNameBank from PokemonPicking for the position in the chosen pokemon array
 	private int[][] rando;
-	private int[] pokemonChosenY;
 	private JLabel[] pokemonBattle;
 	private int[] population;
 	
@@ -73,7 +72,7 @@ public class NewWindow {
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
 					//will set the source for the pokemon pictures so they can be added to the label
-					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -82,32 +81,30 @@ public class NewWindow {
 				}
 				
 			}
-			System.out.println("\n");
 		}
 		pokemonBattle = new JLabel[2];
 		population = new int[3];
-		pokemonChosenY = new int[2];
 
-		nextBattle = new JButton("NEXT BATTLE");
+		nextBattle = new JButton("START");
 		Battle battle = new Battle();
 		nextBattle.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//will switch the pictures and stats on screen
 				Random r = new Random();
 				String source;
-				int type;
+				int type, y;
 				for(int i = 0; i < 2; i++) {
 					type = r.nextInt(3);
-					pokemonChosenY[i] = Integer.parseInt(battle.pokemonSelector(population[type], type));
-					source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[type][pokemonChosenY[i]];
+					y = Integer.parseInt(battle.pokemonSelector(population[type], type));
+					source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type, y);
 					System.out.println(source);
 					pokemonBattle[i] = new JLabel();
-					pokemonBattle[i].setIcon(new ImageIcon(source));
+					pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 					c.gridy = 0;
 					c.gridx = i;
 					panelGray.add(pokemonBattle[i], c);
+					nextBattle.setText("NEXTBATTLE");
 				}
 			}
 		});
@@ -132,7 +129,6 @@ public class NewWindow {
 		c.gridx = 1;
 		panelGray.add(nextAttack, c);//have not able to click after health is @ 0
 		
-		
 		panelColour[0].setBackground(Color.red);
 		c.gridy = 0;
 		c.ipadx = 1540;
@@ -150,7 +146,7 @@ public class NewWindow {
 		
 		panelGray.setBackground(Color.gray);
 		c.gridy = 3;
-		c.ipady = 475;
+		c.ipady = 100;
 		panelMain.add(panelGray, c);
 		
 		frame.setContentPane(panelMain);
@@ -194,5 +190,20 @@ public class NewWindow {
 	
 	public void grabPopulation(int type, int pop) {
 		population[type] = pop;
+	}
+	
+	public String matchSourceName(int i, int type, int y) {
+		boolean done = false;
+		String source = "blub";
+		int t = 0;
+		while(!done) {
+			if(name[type][y].substring(0, 3).equals(pokemonPicSource[type][t].substring(0, 3))) {
+				done = true;
+				source = pokemonPicSource[type][t];
+			}else {
+				t++;
+			}
+		}
+		return source;
 	}
 }
