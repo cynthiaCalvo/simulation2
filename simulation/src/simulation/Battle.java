@@ -1,6 +1,6 @@
-/**
- * David Sawatzky
- * I made this a while ago so I don't know the exact date lol
+/*
+ * Cynthia C. & David S.
+ * February+March 2020
  */
 package simulation; 
 

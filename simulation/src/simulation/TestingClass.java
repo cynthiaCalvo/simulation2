@@ -1,3 +1,7 @@
+/*
+ * Cynthia C. & David S.
+ * February+March 2020
+ */
 package simulation;
 
 public class TestingClass {
