@@ -32,7 +32,7 @@ public class FirstWindow implements ActionListener{
 	public FirstWindow() {
 		frame = new JFrame("Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1540, 900);
+		frame.setSize(1200, 800);
 		frame.setLocationRelativeTo(null);
 		
 		panel = new JPanel(new GridBagLayout());

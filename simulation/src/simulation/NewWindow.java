@@ -41,16 +41,16 @@ public class NewWindow {
 	public void gui() {
 		frame = new JFrame("Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1540, 900);
+		frame.setSize(1200, 800);
 		frame.setLocationRelativeTo(null);
 		
 		panelMain = new JPanel(new GridBagLayout());
 		panelMain.setLayout(new GridBagLayout());
 		panelGray = new JPanel(new GridBagLayout());
-		
+		panelGray.setLayout(new GridBagLayout());
+		GridBagConstraints g = new GridBagConstraints();
 		
 		panelColour = new JPanel[3];
-		
 		GridBagConstraints c = new GridBagConstraints();
 		
 		String[] typeLabelString = {"FIRE", "GRASS", "WATER"};
@@ -87,9 +87,10 @@ public class NewWindow {
 		
 		for(int u = 0; u < 2; u++) {
 			pokemonBattle[u] = new JLabel();
-			c.gridy = 0;
-			c.gridx = u;
-			panelGray.add(pokemonBattle[u], c);
+			g.gridy = 0;
+			g.gridx = u;
+			g.insets = new Insets(0, 60, 0, 60);
+			panelGray.add(pokemonBattle[u], g);
 		}
 		
 		/**
@@ -105,7 +106,6 @@ public class NewWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panelGray.setLayout(new GridBagLayout());
 				Random r = new Random();
 				String[] source = new String[2];
 				int type, y;
@@ -114,12 +114,10 @@ public class NewWindow {
 					do {
 						y = Integer.parseInt(battle.pokemonSelector(population[type], type));
 						source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type, y);
-					}while(i == 1 && source[0].equals(source[1]));
-					System.out.println(source[i]);
-					pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+					}while(i == 1 && source[0].equals(source[1]));//makes it so pokemon don't verse themselves
+					pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
 				}
 				nextBattle.setText("NEXTBATTLE");
-				System.out.println("");
 			}
 		});
 		c.gridy = 1;
