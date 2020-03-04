@@ -17,7 +17,7 @@ public class Battle {
 	private int pokemonMoveValues[][] = {
 			{4, 3, 2, 6, 8}, //fire moves
 			{3, 4, 5, 2, 7}, //grass moves
-			{2, 6, 4, 5, 8}, //water moves
+			{2, 6, 4, 5, 8}, //water moves 
 	};
 	
 	
