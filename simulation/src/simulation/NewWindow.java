@@ -45,8 +45,9 @@ public class NewWindow {
 		frame.setLocationRelativeTo(null);
 		
 		panelMain = new JPanel(new GridBagLayout());
-		panelGray = new JPanel(new GridBagLayout());
 		panelMain.setLayout(new GridBagLayout());
+		panelGray = new JPanel(new GridBagLayout());
+		
 		
 		panelColour = new JPanel[3];
 		
@@ -83,6 +84,20 @@ public class NewWindow {
 		}
 		pokemonBattle = new JLabel[2];
 		population = new int[3];
+		
+		for(int u = 0; u < 2; u++) {
+			pokemonBattle[u] = new JLabel();
+			c.gridy = 0;
+			c.gridx = u;
+			panelGray.add(pokemonBattle[u], c);
+		}
+		
+		/**
+		 * notes for me, not you
+		 * put nextAttack button within the nextBattle actionListener method - so it will be there until there is another battle
+		 * for nextAttack it will then need to loop until one pokemon's health is at 0
+		 * then the user will need to press nextBattle button to start it over again
+		 */
 
 		nextBattle = new JButton("START");
 		Battle battle = new Battle();
@@ -90,25 +105,24 @@ public class NewWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				panelGray.setLayout(new GridBagLayout());
 				Random r = new Random();
-				String source;
+				String[] source = new String[2];
 				int type, y;
 				for(int i = 0; i < 2; i++) {
 					type = r.nextInt(3);
-					y = Integer.parseInt(battle.pokemonSelector(population[type], type));
-					source = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type, y);
-					System.out.println(source);
-					
-					pokemonBattle[i] = new JLabel();
-					pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
-					c.gridy = 0;
-					c.gridx = i;
-					panelGray.add(pokemonBattle[i], c);
-					nextBattle.setText("NEXTBATTLE");
+					do {
+						y = Integer.parseInt(battle.pokemonSelector(population[type], type));
+						source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type, y);
+					}while(i == 1 && source[0].equals(source[1]));
+					System.out.println(source[i]);
+					pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 				}
+				nextBattle.setText("NEXTBATTLE");
+				System.out.println("");
 			}
 		});
-		c.gridy = 2;
+		c.gridy = 1;
 		c.gridx = 0;
 		panelGray.add(nextBattle, c);//have not able to click until health is @ 0
 		
@@ -125,7 +139,7 @@ public class NewWindow {
 				
 			});
 		}
-		c.gridy = 2;
+		c.gridy = 1;
 		c.gridx = 1;
 		panelGray.add(nextAttack, c);//have not able to click after health is @ 0
 		
