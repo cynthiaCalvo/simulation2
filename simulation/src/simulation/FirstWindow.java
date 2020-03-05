@@ -156,4 +156,8 @@ public class FirstWindow implements ActionListener{
 			return 25;
 		}
 	}
+	
+	public int returnStrength(int type) {
+		return pokemonStrength[type];
+	}
 }

@@ -30,13 +30,11 @@ public class NewWindow {
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
 	private JButton nextAttack, nextBattle;
-	private JLabel[] typeLabel;
-	//will store the names of the pokemon chosen
+	private JLabel[] typeLabel, pokemonBattle, stats;
 	private String[][] name;
-	//will store the y position from the pokemonNameBank from PokemonPicking for the position in the chosen pokemon array
 	private int[][] rando;
-	private JLabel[] pokemonBattle;
-	private int[] population;
+	private int[] population, pokLevel, strength;
+	private double[] pokHealth;
 	
 	/**
 	 * gui() method cannot be a class method b/c it needs to be called after the other methods to set the data in arrays
@@ -71,30 +69,38 @@ public class NewWindow {
 			typeLabel[x].setForeground(Color.black);
 			panelColour[x].add(typeLabel[x], c);
 			for(int y = 0; y < 10; y++) {
-				//will only go through if there is a pokemon set to that spot
 				//@school: H:/git/simulation2/simulation/src/simulation/Images/
 				//@home computer b/c source is different: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					//will set the source for the pokemon pictures so they can be added to the label
 					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
-					//adds the label/picture to the correct panel
 					panelColour[x].add(pokemonPictures[x][y], c);
 				}
 			}
 		}
 		pokemonBattle = new JLabel[2];
 		population = new int[3];
+		stats = new JLabel[2];
 		
 		for(int u = 0; u < 2; u++) {
 			pokemonBattle[u] = new JLabel();
 			g.gridy = 0;
-			g.gridx = u;
-			g.insets = new Insets(0, 60, 0, 60);
+			g.gridx = u + 1;
+			g.insets = new Insets(0, 30, 0, 30);
 			panelGray.add(pokemonBattle[u], g);
+			
+			stats[u] = new JLabel();
+			stats[u].setBackground(Color.white);
+			g.gridy = 0;
+			switch(u) {
+			case 0:g.gridx = 0;break;
+			case 1:g.gridx = 3;break;
+			}
+			g.insets = new Insets(0, 10, 0, 10);
+			panelGray.add(stats[u], g);
 		}
 		
 		/**
@@ -103,6 +109,9 @@ public class NewWindow {
 		 * for nextAttack it will then need to loop until one pokemon's health is at 0
 		 * then the user will need to press nextBattle button to start it over again
 		 */
+		pokHealth = new double[2];
+		pokLevel = new int[2];
+		
 
 		nextBattle = new JButton("START");
 		Battle battle = new Battle();
@@ -115,11 +124,14 @@ public class NewWindow {
 				int type, y;
 				for(int i = 0; i < 2; i++) {
 					type = r.nextInt(3);
+					pokLevel[i] = battle.lvlInput(strength[type]);
+					pokHealth[i] = battle.hpGen(pokLevel[i]);
 					do {
 						y = Integer.parseInt(battle.pokemonSelector(population[type], type));
 						source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type, y);
-					}while(i == 1 && source[0].equals(source[1]));//makes it so pokemon don't verse themselves
+					}while(i == 1 && source[0].equals(source[1]));
 					pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
+					stats[i].setText("Level: " + pokLevel[i] + "\nHealth: " + pokHealth[i]);
 				}
 				nextBattle.setText("NEXTBATTLE");
 			}
@@ -129,18 +141,16 @@ public class NewWindow {
 		panelGray.add(nextBattle, c);//have not able to click until health is @ 0
 		
 		nextAttack = new JButton("NEXT ATTACK");
-		int health = 0;//placeholder until I get health 
-		while(health > 0) {//will have to loop until one pokemon is dead - need health for that tho
-			nextAttack.addActionListener(new ActionListener() {
+		nextAttack.addActionListener(new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					//will implement the next attack
-					//also will need to change stats
-				}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					if(pokHealth[0] > 0 && pokHealth[1] > 0) {
+						
+					}
+			}
 				
-			});
-		}
+		});
 		c.gridy = 1;
 		c.gridx = 1;
 		panelGray.add(nextAttack, c);//have not able to click after health is @ 0
@@ -221,5 +231,13 @@ public class NewWindow {
 			}
 		}
 		return source;
+	}
+	
+	public void grabStrength(int type, int stren) {
+		strength[type] = stren;
+	}
+	
+	public void setStrength() {
+		strength = new int[3];
 	}
 }

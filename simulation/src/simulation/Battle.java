@@ -47,8 +47,7 @@ public class Battle {
 		default:
 		}
 		
-		pokemonSelected = Integer.toString(pokemonRandom);// I switched this from returning the name to the coordinates - which makes it easier for me to use
-		
+		pokemonSelected = Integer.toString(pokemonRandom);
 		return pokemonSelected;
 	}//done
 	
@@ -80,12 +79,12 @@ public class Battle {
 	 * 2 strength = lvls between 3-6.
 	 * 3 strength = lvls between 6-10.
 	 */
-	public int lvlInput(int strength) {
+	public int lvlInput(int strength) {//*********************************
 		Random r = new Random();
 		int lvl = 1;
 		
 		switch(strength) {
-		case 1: lvl = r.nextInt(3);break;
+		case 1: lvl = r.nextInt(3);break;//***is allowing for a level 0, plz fix
 		case 2: lvl = r.nextInt(6-3) + 3;break;
 		case 3: lvl = r.nextInt(11-6) + 6;break;
 		default: System.out.println("Error, strength type not accepted");

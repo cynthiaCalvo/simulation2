@@ -40,9 +40,10 @@ public class TestingClass {
 		
 		//will pop up the new window 
 		nw.gui();
-
+		nw.setStrength();
 		for(int v = 0; v < 3; v++) {
 			nw.grabPopulation(v, population[v]);
+			nw.grabStrength(v, fw.returnStrength(v));
 		}
 	}
 }
