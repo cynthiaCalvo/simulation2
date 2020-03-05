@@ -19,6 +19,7 @@ public class Battle {
 			{3, 4, 5, 2, 7}, //grass moves
 			{2, 6, 4, 5, 8}, //water moves 
 	};
+	private int attackCoordinates;
 	
 	
 	/*
@@ -66,11 +67,20 @@ public class Battle {
 		case 0: randomAttack = r.nextInt(4); attack = pokemonMoves[0][randomAttack];break; //fire attacks
 		case 1: randomAttack = r.nextInt(4); attack = pokemonMoves[1][randomAttack];break; //grass attacks
 		case 2: randomAttack = r.nextInt(4); attack = pokemonMoves[2][randomAttack];break; //water attacks
-		default: System.out.println("Error: Type not specified in Battle.java");
+		default: randomAttack = 25;
 		}
 		
+		attackCoordinates = randomAttack;
 		return attack; 
 	} //done
+	
+	public int returnAttackValue(int type, int y) {
+		return pokemonMoveValues[type][y];
+	}//finished
+	
+	public int returnAttackCoordinates() {
+		return attackCoordinates;
+	}//finished
 	
 	/*
 	 * Collects the input and assaigns a variety of levels to the pokemon.
@@ -84,7 +94,7 @@ public class Battle {
 		int lvl = 1;
 		
 		switch(strength) {
-		case 1: lvl = r.nextInt(3);break;//***is allowing for a level 0, plz fix
+		case 1: lvl = r.nextInt(3 - 1) + 1;break;
 		case 2: lvl = r.nextInt(6-3) + 3;break;
 		case 3: lvl = r.nextInt(11-6) + 6;break;
 		default: System.out.println("Error, strength type not accepted");
@@ -114,7 +124,7 @@ public class Battle {
 		}
 		
 		return health;
-	} //done??
+	} //done?? - yes
 	
 	/*
 	 * Will determine how strong the attack of a particular pokemon is
