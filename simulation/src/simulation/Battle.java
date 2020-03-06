@@ -152,9 +152,17 @@ public class Battle {
 	/*
 	 * Deals with assigning a chance for AN attack to do double dablage
 	 */
-	public int dailyDoubleChance() {
+	public int critChance(int userInput, int attack) { //userInput is the % chance the user suggests, attack is the attack that was chosen
+		int chance;
+		Random r = new Random();
+		chance = r.nextInt(100) + 1;
 		
+		if(chance == userInput || chance < userInput) {
+			attack = attack*2;
+		}else {
+			//hi there :)
+		}
 		
-		return 0; //placeholder
-	}
+		return attack; 
+	} //done
 }
