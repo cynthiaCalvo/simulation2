@@ -32,10 +32,11 @@ public class NewWindow {
 	private JButton nextAttack, nextBattle;
 	private JLabel[] typeLabel, pokemonBattle, stats, attack;
 	private String[][] name;
+	private String[] source;
 	private int[][] rando, pokLevelValue;
 	private int[] population, pokLevel, strength, type, y;
 	private double[] pokHealth;
-	private boolean[][] pokLevelSet;
+	private boolean[][] pokLevelSet, alive;
 	private boolean turn;
 	
 	/**
@@ -72,10 +73,10 @@ public class NewWindow {
 			panelColour[x].add(typeLabel[x], c);
 			for(int y = 0; y < 10; y++) {
 				//@school: H:/git/simulation2/simulation/src/simulation/Images/
-				//@home computer b/c source is different: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
+				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -107,19 +108,16 @@ public class NewWindow {
 			attack[u] = new JLabel();
 			g.gridy = 1;
 			g.gridx = u + 1;
+			g.insets = new Insets(10, 10, 0, 0);
 			panelGray.add(attack[u], g);
 		}
 		
-		/**
-		 * notes for me, not you
-		 * put nextAttack button within the nextBattle actionListener method - so it will be there until there is another battle
-		 * for nextAttack it will then need to loop until one pokemon's health is at 0
-		 * then the user will need to press nextBattle button to start it over again
-		 */
 		pokHealth = new double[2];
 		pokLevel = new int[2];
 		pokLevelSet = new boolean[3][10];
+		alive = new boolean[3][10];
 		pokLevelValue = new int[3][10];
+		source = new String[2];
 		type = new int[2];
 		y = new int[2];
 		turn = true;
@@ -127,6 +125,7 @@ public class NewWindow {
 		for(int x = 0; x < 3; x++) {
 			for(int y = 0; y < 10; y++) {
 				pokLevelSet[x][y] = false;
+				alive[x][y] = true;
 			}
 		}
 
@@ -137,23 +136,36 @@ public class NewWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
-				String[] source = new String[2];
 				int rounds = 0;
+				//
 				if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
+					//
+					for(int c = 0; c < 2; c++) {
+		 				if(pokHealth[c] == 0) {
+							alive[type[c]][y[c]] = false;
+						}else {
+							pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+						}
+					}	
+					//
 					for(int i = 0; i < 2; i++) {
+						attack[i].setText("");
 						type[i] = r.nextInt(3);
+						//
 						do {
 							y[i] = Integer.parseInt(battle.pokemonSelector(population[type[i]], type[i]));
-							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
+							source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type[i], y[i]);
+							//
 							if(rounds > 10) {
 								type[i] = r.nextInt(3);
 							}
 							rounds++;
-						}while(i == 1 && source[0].equals(source[1]));
+						}while(i == 1 && source[0].equals(source[1]) || !alive[type[i]][y[i]]);//fix
 						
 						pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
-						pokemonPictures[type[i]][y[i]].setIcon(null);//add them back on after if they haven't died plz
+						pokemonPictures[type[i]][y[i]].setIcon(null);
 						
+						//
 						if(!pokLevelSet[type[i]][y[i]]) {
 							pokLevel[i] = battle.lvlInput(strength[type[i]]);
 							pokLevelValue[type[i]][y[i]] = pokLevel[i];
@@ -164,15 +176,14 @@ public class NewWindow {
 						pokHealth[i] = battle.hpGen(pokLevel[i]);
 						
 						stats[i].setText("<html>" + name[type[i]][y[i]].toUpperCase() + "<br>Level: " + pokLevel[i] + "<br>Health: " + pokHealth[i]);
-						
+						stats[i].setForeground(Color.magenta);
 					}
 				}
-				
 				nextBattle.setText("NEXTBATTLE");
 			}
 		});
 		c.gridy = 2;
-		c.gridx = 0;
+		c.gridx = 1;
 		panelGray.add(nextBattle, c);
 		
 		nextAttack = new JButton("ATTACK");
@@ -181,20 +192,32 @@ public class NewWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				double hpLost;
+				//
 				if(pokHealth[0] > 0 && pokHealth[1] > 0) {
+					//
 					if(turn) {//turn = true will be pok[0]
 						attack[0].setText(battle.pickAttack(type[0]));
-						attack[0].setBackground(Color.white);
+						attack[0].setForeground(Color.cyan);
 						hpLost = battle.apGen(pokLevel[0], battle.returnAttackValue(type[0], battle.returnAttackCoordinates()));
+						hpLost = Math.round(hpLost);
 						pokHealth[1]-=hpLost;
 						turn = false;
+						//
+						if(pokHealth[1] <= 0) {
+							pokHealth[1] = 0.0;
+						}
 						stats[1].setText("<html>" + name[type[1]][y[1]].toUpperCase() + "<br>Level: " + pokLevel[1] + "<br>Health: " + pokHealth[1] + "<br>-" + hpLost);
 					}else {//turn = false will be pok[1]
 						attack[1].setText(battle.pickAttack(type[1]));
-						attack[1].setBackground(Color.cyan);
+						attack[1].setForeground(Color.white);
 						hpLost = battle.apGen(pokLevel[1], battle.returnAttackValue(type[1], battle.returnAttackCoordinates()));
+						hpLost = Math.round(hpLost);
 						pokHealth[0]-=hpLost;
 						turn = true;
+						//
+						if(pokHealth[0] <= 0) {
+							pokHealth[0] = 0.0;
+						}
 						stats[0].setText("<html>" + name[type[0]][y[0]].toUpperCase() + "<br>Level: " + pokLevel[0] + "<br>Health: " + pokHealth[0] + "<br>-" + hpLost);
 					}	
 				}
@@ -204,11 +227,12 @@ public class NewWindow {
 		});
 		
 		c.gridy = 2;
-		c.gridx = 1;
+		c.gridx = 2;
 		panelGray.add(nextAttack, c);//have not able to click after health is @ 0
 		
 		panelColour[0].setBackground(Color.red);
 		c.gridy = 0;
+		c.gridx = 0;
 		c.ipadx = 1540;
 		c.ipady = 20;
 		c.insets = new Insets(10,0,0,0);
@@ -216,14 +240,17 @@ public class NewWindow {
 		
 		panelColour[1].setBackground(Color.green);
 		c.gridy = 1;
+		c.gridx = 0;
 		panelMain.add(panelColour[1], c);
 		
 		panelColour[2].setBackground(Color.blue);
 		c.gridy = 2;
+		c.gridx = 0;
 		panelMain.add(panelColour[2], c);
 		
 		panelGray.setBackground(Color.gray);
 		c.gridy = 3;
+		c.gridx = 0;
 		c.ipady = 100;
 		panelMain.add(panelGray, c);
 		
@@ -274,7 +301,9 @@ public class NewWindow {
 		boolean done = false;
 		String source = "blub";
 		int t = 0;
+		//
 		while(!done) {
+			//
 			if(name[type][y].substring(0, 3).equals(pokemonPicSource[type][t].substring(0, 3))) {
 				done = true;
 				source = pokemonPicSource[type][t];
