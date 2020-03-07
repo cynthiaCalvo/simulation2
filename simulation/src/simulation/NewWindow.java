@@ -38,6 +38,7 @@ public class NewWindow {
 	private double[] pokHealth;
 	private boolean[][] pokLevelSet, alive;
 	private boolean turn;
+	private int criticalHitChance;
 	
 	/**
 	 * gui() method cannot be a class method b/c it needs to be called after the other methods to set the data in arrays
@@ -46,7 +47,7 @@ public class NewWindow {
 	public void gui() {
 		frame = new JFrame("Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1200, 800);
+		frame.setSize(1200, 700);
 		frame.setLocationRelativeTo(null);
 		
 		panelMain = new JPanel(new GridBagLayout());
@@ -197,8 +198,12 @@ public class NewWindow {
 					//
 					if(turn) {//turn = true will be pok[0]
 						attack[0].setText(battle.pickAttack(type[0]));
+						attack[1].setText("");
 						attack[0].setForeground(Color.cyan);
 						hpLost = battle.apGen(pokLevel[0], battle.returnAttackValue(type[0], battle.returnAttackCoordinates()));
+						System.out.println(hpLost);
+						hpLost = battle.critChance(criticalHitChance, hpLost);
+						System.out.println(hpLost);
 						hpLost = Math.round(hpLost);
 						pokHealth[1]-=hpLost;
 						turn = false;
@@ -209,8 +214,10 @@ public class NewWindow {
 						stats[1].setText("<html>" + name[type[1]][y[1]].toUpperCase() + "<br>Level: " + pokLevel[1] + "<br>Health: " + pokHealth[1] + "<br>-" + hpLost);
 					}else {//turn = false will be pok[1]
 						attack[1].setText(battle.pickAttack(type[1]));
+						attack[0].setText("");
 						attack[1].setForeground(Color.white);
 						hpLost = battle.apGen(pokLevel[1], battle.returnAttackValue(type[1], battle.returnAttackCoordinates()));
+						hpLost = battle.critChance(criticalHitChance, hpLost);
 						hpLost = Math.round(hpLost);
 						pokHealth[0]-=hpLost;
 						turn = true;
@@ -222,6 +229,7 @@ public class NewWindow {
 					}	
 				}
 				nextAttack.setText("NEXT ATTACK");
+				System.out.println();
 			}
 				
 		});
@@ -320,5 +328,9 @@ public class NewWindow {
 	
 	public void setStrength() {
 		strength = new int[3];
+	}
+	
+	public void setCriticalHitChance(int chc) {
+		criticalHitChance = chc;
 	}
 }

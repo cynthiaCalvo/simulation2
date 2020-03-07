@@ -27,8 +27,9 @@ public class FirstWindow implements ActionListener{
 	private JButton button;
 	private boolean trigger;
 	private JLabel[] labels;
-	private JLabel top, middle;
+	private JLabel top, middle, bottom;
 	private JComboBox[] strength;
+	private JTextField criticalHitChance;
 	
 	/**
 	 * will open the first window for user to choose their variables before the simulation starts
@@ -36,7 +37,7 @@ public class FirstWindow implements ActionListener{
 	public FirstWindow() {
 		frame = new JFrame("Frame");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1200, 800);
+		frame.setSize(1200, 700);
 		frame.setLocationRelativeTo(null);
 		
 		panel = new JPanel(new GridBagLayout());
@@ -106,10 +107,21 @@ public class FirstWindow implements ActionListener{
 			panel.add(strength[y], c);
 		}
 		
+		bottom = new JLabel("<html>Chance of Critical Hit: <br>Put value in as percent w/o % sign<br>(A value of 10 will be entered if you do not fill in)");
+		c.gridy = 7;
+		c.gridx = 1;
+		c.insets = new Insets(10, 0, 0, 0);
+		panel.add(bottom, c);
+		
+		criticalHitChance = new JTextField(10);
+		c.gridy = 8;
+		c.gridx = 1;
+		panel.add(criticalHitChance, c);
+		
 		panel.setOpaque(true);
 		panel.setBackground(Color.lightGray);
 		
-		c.gridy = 7;
+		c.gridy = 9;
 		c.gridx = 1;
 		c.insets = new Insets(10, 0, 0, 0);
 		panel.add(button, c);
@@ -159,5 +171,13 @@ public class FirstWindow implements ActionListener{
 	
 	public int returnStrength(int type) {
 		return pokemonStrength[type];
+	}
+	
+	public int returnCHC() {
+		if(criticalHitChance.getText().equals("")) {
+			return 10;
+		}else {
+			return Integer.parseInt(criticalHitChance.getText());
+		}
 	}
 }

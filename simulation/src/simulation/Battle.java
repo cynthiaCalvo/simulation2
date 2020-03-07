@@ -152,7 +152,7 @@ public class Battle {
 	/*
 	 * Deals with assigning a chance for AN attack to do double dablage
 	 */
-	public int critChance(int userInput, int attack) { //userInput is the % chance the user suggests, attack is the attack that was chosen
+	public double critChance(int userInput, double attack) { //userInput is the % chance the user suggests, attack is the attack that was chosen
 		int chance;
 		Random r = new Random();
 		chance = r.nextInt(100) + 1;
@@ -162,7 +162,6 @@ public class Battle {
 		}else {
 			//hi there :)
 		}
-		
 		return attack; 
-	} //done
+	}
 }
