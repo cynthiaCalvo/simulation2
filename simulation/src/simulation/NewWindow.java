@@ -77,7 +77,7 @@ public class NewWindow {
 				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -137,31 +137,36 @@ public class NewWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
-				int rounds = 0;
-				//
-				if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
+				if(checkWin()) {
+					System.out.println("COW");
+				}else if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
 					//
 					for(int c = 0; c < 2; c++) {
-		 				if(pokHealth[c] == 0) {
-							alive[type[c]][y[c]] = false;
-						}else {
+		 				if(pokHealth[c] <= 0 && !nextBattle.getText().equals("START")) {
+							alive[type[c]][y[c]] = false;//choosing wrong pokemon to make dead - always a fire pokemon
+							System.out.println(name[type[c]][y[c]] + ": DEAD DEAD DEAD");
+						}else {//it's not putting pictures up
 							pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 						}
 					}	
 					//
 					for(int i = 0; i < 2; i++) {
+						int rounds = 0;
 						attack[i].setText("");
 						type[i] = r.nextInt(3);
 						//
 						do {
 							y[i] = Integer.parseInt(battle.pokemonSelector(population[type[i]], type[i]));
-							source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type[i], y[i]);
+							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
 							//
-							if(rounds > 10) {
+							if(rounds > 11) {
 								type[i] = r.nextInt(3);
+								rounds = 0;
 							}
 							rounds++;
 						}while(i == 1 && source[0].equals(source[1]) || !alive[type[i]][y[i]]);//fix
+						
+						//System.out.println(checkWin());
 						
 						pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
 						pokemonPictures[type[i]][y[i]].setIcon(null);
@@ -177,10 +182,10 @@ public class NewWindow {
 						pokHealth[i] = battle.hpGen(pokLevel[i]);
 						
 						stats[i].setText("<html>" + name[type[i]][y[i]].toUpperCase() + "<br>Level: " + pokLevel[i] + "<br>Health: " + pokHealth[i]);
-						stats[i].setForeground(Color.magenta);
 					}
 				}
 				nextBattle.setText("NEXTBATTLE");
+				nextAttack.setText("ATTACK");
 			}
 		});
 		c.gridy = 2;
@@ -192,7 +197,7 @@ public class NewWindow {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double hpLost;
+				double hpLost, criHit;
 				//
 				if(pokHealth[0] > 0 && pokHealth[1] > 0) {
 					//
@@ -201,10 +206,12 @@ public class NewWindow {
 						attack[1].setText("");
 						attack[0].setForeground(Color.cyan);
 						hpLost = battle.apGen(pokLevel[0], battle.returnAttackValue(type[0], battle.returnAttackCoordinates()));
-						System.out.println(hpLost);
-						hpLost = battle.critChance(criticalHitChance, hpLost);
-						System.out.println(hpLost);
 						hpLost = Math.round(hpLost);
+						criHit = hpLost;
+						hpLost = battle.critChance(criticalHitChance, hpLost);
+						if(hpLost == (criHit*2)) {
+							attack[0].setForeground(Color.red);
+						}
 						pokHealth[1]-=hpLost;
 						turn = false;
 						//
@@ -217,8 +224,12 @@ public class NewWindow {
 						attack[0].setText("");
 						attack[1].setForeground(Color.white);
 						hpLost = battle.apGen(pokLevel[1], battle.returnAttackValue(type[1], battle.returnAttackCoordinates()));
-						hpLost = battle.critChance(criticalHitChance, hpLost);
 						hpLost = Math.round(hpLost);
+						criHit = hpLost;
+						hpLost = battle.critChance(criticalHitChance, hpLost);
+						if(hpLost == (criHit*2)) {
+							attack[1].setForeground(Color.red);
+						}
 						pokHealth[0]-=hpLost;
 						turn = true;
 						//
@@ -226,17 +237,20 @@ public class NewWindow {
 							pokHealth[0] = 0.0;
 						}
 						stats[0].setText("<html>" + name[type[0]][y[0]].toUpperCase() + "<br>Level: " + pokLevel[0] + "<br>Health: " + pokHealth[0] + "<br>-" + hpLost);
-					}	
+					}
+						
+				}
+				if(checkWin()) {
+					nextBattle.setText("FINISH");
 				}
 				nextAttack.setText("NEXT ATTACK");
-				System.out.println();
 			}
 				
 		});
 		
 		c.gridy = 2;
 		c.gridx = 2;
-		panelGray.add(nextAttack, c);//have not able to click after health is @ 0
+		panelGray.add(nextAttack, c);
 		
 		panelColour[0].setBackground(Color.red);
 		c.gridy = 0;
@@ -262,40 +276,20 @@ public class NewWindow {
 		c.ipady = 100;
 		panelMain.add(panelGray, c);
 		
+		panelMain.setBackground(Color.gray);
+		
 		frame.setContentPane(panelMain);
 		frame.setVisible(true);
 	}
 	
-	/**
-	 * will set the name array to the names of the chosen pokemon
-	 * it has to grab these from the TestingClass b/c we cannot directly take from PokemonPicking
-	 * without making an instance of PokemonPicking - which would reset all the data
-	 * @param grab
-	 * @param type
-	 * @param pok
-	 */
 	public void grabPokemonNames(String grab, int type, int pok) {
 		name[type][pok] = grab;
 	}
 	
-	/**
-	 * will set rando array to the y position of the pokemon from pokemonNameBank
-	 * same as before - this has to be grabbed from TestingClass b/c we cannot take
-	 * directly from PokemonPicking w/o making an instance of it here in this class
-	 * which would reset all the data
-	 * @param grab
-	 * @param type
-	 * @param pok
-	 */
 	public void grabRandoPokemon(int grab, int type, int pok) {
 		rando[type][pok] = grab;
 	}
 	
-	/**
-	 * will set rando and name array so they can have values placed in them
-	 * this has to be done in a seperate method b/c the gui(); method has to be called afterwards
-	 * which will be explained there
-	 */
 	public void setRandoAndName() {
 		name = new String[3][10];
 		rando = new int[3][10];
@@ -332,5 +326,21 @@ public class NewWindow {
 	
 	public void setCriticalHitChance(int chc) {
 		criticalHitChance = chc;
+	}
+	
+	public boolean checkWin() {
+		int notDead = 0;
+		for(int x = 0; x < 3; x++) {
+			for(int y = 0; y < 10; y++) {
+				if(alive[x][y]) {
+					notDead++;
+				}
+			}
+		}
+		if(notDead > 1) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 }

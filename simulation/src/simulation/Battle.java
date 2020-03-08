@@ -94,9 +94,9 @@ public class Battle {
 		int lvl = 1;
 		
 		switch(strength) {
-		case 1: lvl = r.nextInt(3 - 1) + 1;break;
-		case 2: lvl = r.nextInt(6-3) + 3;break;
-		case 3: lvl = r.nextInt(11-6) + 6;break;
+		case 1: lvl = r.nextInt(4 - 1) + 1;break;
+		case 2: lvl = r.nextInt(7-4) + 4;break;
+		case 3: lvl = r.nextInt(11-7) + 7;break;
 		default: System.out.println("Error, strength type not accepted");
 		}
 		
