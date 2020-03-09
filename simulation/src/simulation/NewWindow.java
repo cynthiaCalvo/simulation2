@@ -25,7 +25,7 @@ public class NewWindow {
 	private JPanel panelGray, panelMain;
 	private JLabel[][] pokemonPictures;
 	private String[][] pokemonPicSource = {
-			{"Scorbunny.png", "Charmander.png", "Vulpix.jpg", "Torchic.jfif", "Fennekin.jfif", "Lampent.jfif", "Fletchinder.jfif", "Braixen.jfif", "Litten.png", "Victini.jfif"},
+			{"Skorbunny.png", "Charmander.png", "Vulpix.jpg", "Torchic.jfif", "Fennekin.jfif", "Lampent.jfif", "Fletchinder.jfif", "Braixen.jfif", "Litten.png", "Victini.jfif"},
 			{"Bulbasaur.png", "Oddish.jfif", "Chickorita.jfif", "Cherubi.jfif", "Snivy.png", "Pansage.jfif", "Rowlett.png", "Skiddo.jfif", "Grookey.jfif", "Bounsweet.png"},
 			{"Squirtle.jfif", "Seel.jfif", "Vaporeon.jfif", "Totodile.jfif", "Omanyte.jfif", "Lotad.jfif", "Spheal.png", "Oshawott.jfif", "Ducklett.jfif", "Sobble.jfif"}
 	};
@@ -77,7 +77,7 @@ public class NewWindow {
 				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -142,6 +142,8 @@ public class NewWindow {
 				for(int c = 0; c < 2; c++) {
 	 				if(pokHealth[c] <= 0 && !nextBattle.getText().equals("START")) {
 						alive[type[c]][y[c]] = false;
+					}else if(nextBattle.getText().equals("START")) {
+						nextBattle.setText("NEXTBATTLE");
 					}else {
 						pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					}
@@ -156,7 +158,11 @@ public class NewWindow {
 				}
 				
 				if(notDead == 1) {
-					System.out.println("WINNER");//indicate winner here
+					if(pokHealth[1] <= 0) {
+						Winner win = new Winner(type[0], name[type[0]][y[0]]);
+					}else {
+						Winner win = new Winner(type[1], name[type[1]][y[1]]);
+					}
 				}else if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
 					//
 					for(int i = 0; i < 2; i++) {
@@ -166,15 +172,16 @@ public class NewWindow {
 						source[i] = "";
 						//
 						do {
-							y[i] = battle.pokemonSelector(population[type[i]], type[i]);
-							source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type[i], y[i]);
 							//
 							if(rounds > 10) {
 								type[i] = r.nextInt(3);
 								rounds = 0;
 							}
+							y[i] = battle.pokemonSelector(population[type[i]], type[i]);
+							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
+							
 							rounds++;
-						}while(i == 1 && source[0].equals(source[1]) || !alive[type[i]][y[i]]);//fix
+						}while(i == 1 && source[0].equals(source[1]) || !alive[type[i]][y[i]]);
 						
 						pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
 						pokemonPictures[type[i]][y[i]].setIcon(null);
@@ -192,7 +199,6 @@ public class NewWindow {
 						stats[i].setText("<html>" + name[type[i]][y[i]].toUpperCase() + "<br>Level: " + pokLevel[i] + "<br>Health: " + pokHealth[i]);
 					}
 				}
-				nextBattle.setText("NEXTBATTLE");
 				nextAttack.setText("ATTACK");
 			}
 		});
@@ -212,39 +218,56 @@ public class NewWindow {
 					if(turn) {//turn = true will be pok[0]
 						attack[0].setText(battle.pickAttack(type[0]));
 						attack[1].setText("");
-						attack[0].setForeground(Color.cyan);
+						attack[0].setForeground(Color.magenta);
 						hpLost = battle.apGen(pokLevel[0], battle.returnAttackValue(type[0], battle.returnAttackCoordinates()));
 						hpLost = Math.round(hpLost);
-						criHit = hpLost;
-						hpLost = battle.critChance(criticalHitChance, hpLost);
-						if(hpLost == (criHit*2)) {
-							attack[0].setForeground(Color.red);
+						if(hpLost > 1) {
+							pokHealth[0]+=hpLost;
+							attack[0].setForeground(Color.cyan);
+							stats[0].setText("<html>" + name[type[0]][y[0]].toUpperCase() + "<br>Level: " + pokLevel[0] + "<br>Health: " + pokHealth[0] + "<br>+" + hpLost);
+						}else {
+							criHit = hpLost;
+							hpLost = battle.critChance(criticalHitChance, hpLost);
+							if(hpLost == (criHit*2)) {
+								attack[0].setForeground(Color.red);
+							}
+							pokHealth[1]+=hpLost;
+							if(pokHealth[1] <= 0) {
+								pokHealth[1] = 0.0;
+							}
+							stats[1].setText("<html>" + name[type[1]][y[1]].toUpperCase() + "<br>Level: " + pokLevel[1] + "<br>Health: " + pokHealth[1] + "<br>" + hpLost);
 						}
-						pokHealth[1]-=hpLost;
 						turn = false;
 						//
-						if(pokHealth[1] <= 0) {
-							pokHealth[1] = 0.0;
-						}
-						stats[1].setText("<html>" + name[type[1]][y[1]].toUpperCase() + "<br>Level: " + pokLevel[1] + "<br>Health: " + pokHealth[1] + "<br>-" + hpLost);
+						
 					}else {//turn = false will be pok[1]
 						attack[1].setText(battle.pickAttack(type[1]));
 						attack[0].setText("");
-						attack[1].setForeground(Color.white);
+						attack[1].setForeground(Color.pink);
 						hpLost = battle.apGen(pokLevel[1], battle.returnAttackValue(type[1], battle.returnAttackCoordinates()));
 						hpLost = Math.round(hpLost);
-						criHit = hpLost;
-						hpLost = battle.critChance(criticalHitChance, hpLost);
-						if(hpLost == (criHit*2)) {
-							attack[1].setForeground(Color.red);
+						if(hpLost > 1) {
+							pokHealth[1]+=hpLost;
+							attack[1].setForeground(Color.cyan);
+							stats[1].setText("<html>" + name[type[1]][y[1]].toUpperCase() + "<br>Level: " + pokLevel[1] + "<br>Health: " + pokHealth[1] + "<br>+" + hpLost);
+						}else {
+							criHit = hpLost;
+							hpLost = battle.critChance(criticalHitChance, hpLost);
+							if(hpLost == (criHit*2)) {
+								attack[1].setForeground(Color.red);
+							}
+							pokHealth[0]+=hpLost;
+							if(pokHealth[0] <= 0) {
+								pokHealth[0] = 0.0;
+							}
+							stats[0].setText("<html>" + name[type[0]][y[0]].toUpperCase() + "<br>Level: " + pokLevel[0] + "<br>Health: " + pokHealth[0] + "<br>" + hpLost);
 						}
-						pokHealth[0]-=hpLost;
 						turn = true;
 						//
-						if(pokHealth[0] <= 0) {
-							pokHealth[0] = 0.0;
-						}
-						stats[0].setText("<html>" + name[type[0]][y[0]].toUpperCase() + "<br>Level: " + pokLevel[0] + "<br>Health: " + pokHealth[0] + "<br>-" + hpLost);
+						/**
+						 * put the label settings into the if statements -
+						 * so hp lost/gained will be on the correct side
+						 */
 					}
 						
 				}

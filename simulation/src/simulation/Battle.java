@@ -15,9 +15,9 @@ public class Battle {
 	};
 	
 	private int pokemonMoveValues[][] = {
-			{4, 3, 2, 6, 8, -5}, //fire moves
-			{3, 4, 5, 2, 7, -5}, //grass moves
-			{2, 6, 4, 5, 8, -5}, //water moves 
+			{-4, -3, -2, -6, -8, 5}, //fire moves
+			{-3, -4, -5, -2, -7, 5}, //grass moves
+			{-2, -6, -4, -5, -8, 5}, //water moves 
 	};
 	private int attackCoordinates;
 	
@@ -61,9 +61,9 @@ public class Battle {
 		String attack = null;
 		
 		switch(type) {
-		case 0: randomAttack = r.nextInt(5); attack = pokemonMoves[0][randomAttack];break; //fire attacks
-		case 1: randomAttack = r.nextInt(5); attack = pokemonMoves[1][randomAttack];break; //grass attacks
-		case 2: randomAttack = r.nextInt(5); attack = pokemonMoves[2][randomAttack];break; //water attacks
+		case 0: randomAttack = r.nextInt(6); attack = pokemonMoves[0][randomAttack];break; //fire attacks
+		case 1: randomAttack = r.nextInt(6); attack = pokemonMoves[1][randomAttack];break; //grass attacks
+		case 2: randomAttack = r.nextInt(6); attack = pokemonMoves[2][randomAttack];break; //water attacks
 		default: randomAttack = 25;
 		}
 		
@@ -127,21 +127,25 @@ public class Battle {
 	 * Will determine how strong the attack of a particular pokemon is
 	 */
 	public double apGen(int lvl, int atkValue) { //lvl is self explanitory, atkValue is the base damage of the generated attack
-		double atk = 20;
+		double atk = 0;
 		
-		switch(lvl) {
-		case 1: atk = atkValue*1;break;
-		case 2: atk = atkValue*1.2;break;
-		case 3: atk = atkValue*1.4;break;
-		case 4: atk = atkValue*1.6;break;
-		case 5: atk = atkValue*1.8;break;
-		case 6: atk = atkValue*2;break;
-		case 7: atk = atkValue*2.2;break;
-		case 8: atk = atkValue*2.4;break;
-		case 9: atk = atkValue*2.6;break;
-		case 10: atk = atkValue*2.8;break;
-		default: System.out.println("Error in apGen");
+		if(atkValue < 0) {
+			switch(lvl) {
+			case 1: atk = atkValue*1;break;
+			case 2: atk = atkValue*1.2;break;
+			case 3: atk = atkValue*1.4;break;
+			case 4: atk = atkValue*1.6;break;
+			case 5: atk = atkValue*1.8;break;
+			case 6: atk = atkValue*2;break;
+			case 7: atk = atkValue*2.2;break;
+			case 8: atk = atkValue*2.4;break;
+			case 9: atk = atkValue*2.6;break;
+			case 10: atk = atkValue*2.8;break;
+			}
+		}else {
+			atk = atkValue;
 		}
+		
 		
 		return atk;
 	} //done?
