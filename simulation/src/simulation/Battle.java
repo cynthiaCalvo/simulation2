@@ -28,10 +28,9 @@ public class Battle {
 	 * 1 is grass
 	 * 2 is water
 	 */
-	 public String pokemonSelector(int population, int type) { //collects the available pokemon to choose from
+	 public int pokemonSelector(int population, int type) { //collects the available pokemon to choose from
 		Random r = new Random();
 		int pokemonRandom = 0;
-		String pokemonSelected;
 		
 		switch(population) {
 		case 0: pokemonRandom = r.nextInt(0);break;
@@ -47,9 +46,7 @@ public class Battle {
 		case 10: pokemonRandom = r.nextInt(10);break;
 		default:
 		}
-		
-		pokemonSelected = Integer.toString(pokemonRandom);
-		return pokemonSelected;
+		return pokemonRandom;
 	}//done
 	
 	/*

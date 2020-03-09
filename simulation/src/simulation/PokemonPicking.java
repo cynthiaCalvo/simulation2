@@ -42,6 +42,7 @@ public class PokemonPicking {
 			//will set the spot to a rando pokemon unless there is already a pokemon there & if that pokemon hasn't been chosen yet
 			if(pokemonNames[level][x].equals("nool") && noRepeats[level][rando] != true) {
 				pokemonNames[level][x] = pokemonNameBank[level][rando];
+				System.out.println(pokemonNames[level][x]);
 				noRepeats[level][rando] = true;
 				randoPokemon[level][x] = rando;
 				x++;

@@ -77,7 +77,7 @@ public class NewWindow {
 				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -137,36 +137,44 @@ public class NewWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
-				if(checkWin()) {
-					System.out.println("COW");
-				}else if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
-					//
-					for(int c = 0; c < 2; c++) {
-		 				if(pokHealth[c] <= 0 && !nextBattle.getText().equals("START")) {
-							alive[type[c]][y[c]] = false;//choosing wrong pokemon to make dead - always a fire pokemon
-							System.out.println(name[type[c]][y[c]] + ": DEAD DEAD DEAD");
-						}else {//it's not putting pictures up
-							pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+				int notDead = 0;
+				
+				for(int c = 0; c < 2; c++) {
+	 				if(pokHealth[c] <= 0 && !nextBattle.getText().equals("START")) {
+						alive[type[c]][y[c]] = false;
+					}else {
+						pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+					}
+				}
+				
+				for(int x = 0; x < 3; x++) {
+					for(int y = 0; y < 10; y++) {
+						if(alive[x][y] && !name[x][y].equals("nool")) {
+							notDead++;	
 						}
-					}	
+					}
+				}
+				
+				if(notDead == 1) {
+					System.out.println("WINNER");
+				}else if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
 					//
 					for(int i = 0; i < 2; i++) {
 						int rounds = 0;
 						attack[i].setText("");
 						type[i] = r.nextInt(3);
+						source[i] = "";
 						//
 						do {
-							y[i] = Integer.parseInt(battle.pokemonSelector(population[type[i]], type[i]));
-							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
+							y[i] = battle.pokemonSelector(population[type[i]], type[i]);
+							source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type[i], y[i]);
 							//
-							if(rounds > 11) {
+							if(rounds > 10) {
 								type[i] = r.nextInt(3);
 								rounds = 0;
 							}
 							rounds++;
 						}while(i == 1 && source[0].equals(source[1]) || !alive[type[i]][y[i]]);//fix
-						
-						//System.out.println(checkWin());
 						
 						pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
 						pokemonPictures[type[i]][y[i]].setIcon(null);
@@ -239,9 +247,6 @@ public class NewWindow {
 						stats[0].setText("<html>" + name[type[0]][y[0]].toUpperCase() + "<br>Level: " + pokLevel[0] + "<br>Health: " + pokHealth[0] + "<br>-" + hpLost);
 					}
 						
-				}
-				if(checkWin()) {
-					nextBattle.setText("FINISH");
 				}
 				nextAttack.setText("NEXT ATTACK");
 			}
@@ -326,21 +331,5 @@ public class NewWindow {
 	
 	public void setCriticalHitChance(int chc) {
 		criticalHitChance = chc;
-	}
-	
-	public boolean checkWin() {
-		int notDead = 0;
-		for(int x = 0; x < 3; x++) {
-			for(int y = 0; y < 10; y++) {
-				if(alive[x][y]) {
-					notDead++;
-				}
-			}
-		}
-		if(notDead > 1) {
-			return false;
-		}else {
-			return true;
-		}
 	}
 }
