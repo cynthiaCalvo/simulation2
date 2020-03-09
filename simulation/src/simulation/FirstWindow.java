@@ -62,11 +62,13 @@ public class FirstWindow implements ActionListener{
 		
 		choosePopulation = new JTextField[3];
 		
+		//will loop to add all the textfields and type labels on the window
 		for(int i = 0; i < 3; i++) {
 			labels[i] = new JLabel(labelString[i]);
 			c.gridy = 1;
 			c.gridx = i;
 			c.insets = new Insets(0, 5, 0, 5);
+			//will loop to set each type label to it's own colour
 			switch(i) {
 			case 0:labels[i].setForeground(Color.RED);break;
 			case 1:labels[i].setForeground(Color.green);break;
@@ -87,11 +89,13 @@ public class FirstWindow implements ActionListener{
 		c.insets = new Insets(20, 0, 20, 0);
 		panel.add(middle, c);
 		
+		//will loop to set all comboboxs and type labels on the window
 		for(int y = 0; y < 3; y++) {
 			labels[y] = new JLabel(labelString[y]);
 			c.gridy = 5;
 			c.gridx = y;
 			c.insets = new Insets(0, 5, 0, 5);
+			//will set the colour of the labels according to type
 			switch(y) {
 			case 0:labels[y].setForeground(Color.RED);break;
 			case 1:labels[y].setForeground(Color.green);break;
@@ -169,11 +173,21 @@ public class FirstWindow implements ActionListener{
 		}
 	}
 	
+	/**
+	 * will return the strength the user wants each type to be
+	 * @param type
+	 * @return
+	 */
 	public int returnStrength(int type) {
 		return pokemonStrength[type];
 	}
 	
+	/**
+	 * will return how often the user wants a critical hit to take place
+	 * @return
+	 */
 	public int returnCHC() {
+		//will set the critical hit value as 10 if user didn't enter something
 		if(criticalHitChance.getText().equals("")) {
 			return 10;
 		}else {

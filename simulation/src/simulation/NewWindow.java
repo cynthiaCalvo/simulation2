@@ -64,6 +64,7 @@ public class NewWindow {
 		
 		pokemonPictures = new JLabel[3][10];
 		
+		//will loop so all type panels are added to the main panel
 		for(int x = 0; x < 3; x++) {
 			panelColour[x] = new JPanel(new GridBagLayout());
 			typeLabel[x] = new JLabel(typeLabelString[x]);
@@ -72,6 +73,7 @@ public class NewWindow {
 			c.insets = new Insets(0, 0, 0, 50);
 			typeLabel[x].setForeground(Color.black);
 			panelColour[x].add(typeLabel[x], c);
+			//will loop to make sure all the pictures of chosen pokemon get placed into their colour panel
 			for(int y = 0; y < 10; y++) {
 				//@school: H:/git/simulation2/simulation/src/simulation/Images/
 				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
@@ -90,6 +92,7 @@ public class NewWindow {
 		stats = new JLabel[2];
 		attack = new JLabel[2];
 		
+		//will set the display up for battleing
 		for(int u = 0; u < 2; u++) {
 			pokemonBattle[u] = new JLabel();
 			g.gridy = 0;
@@ -99,6 +102,7 @@ public class NewWindow {
 			
 			stats[u] = new JLabel();
 			g.gridy = 0;
+			//will set the grid to be on the correct side of their picture
 			switch(u) {
 			case 0:g.gridx = 0;break;
 			case 1:g.gridx = 3;break;
@@ -123,6 +127,7 @@ public class NewWindow {
 		y = new int[2];
 		turn = true;
 		
+		//will set pokLevelSet(to make sure a pokemon's level isn't set twice) & alive(if they're dead or not)
 		for(int x = 0; x < 3; x++) {
 			for(int y = 0; y < 10; y++) {
 				pokLevelSet[x][y] = false;
@@ -135,11 +140,22 @@ public class NewWindow {
 		nextBattle.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * will go when the user clicks the "START" or "NEXT BATTLE" button as it changes what it says
+			 * this will initialize the next battle or pop up the window for the winner
+			 */
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
 				int notDead = 0;
 				
+				//will check each pokemon in previous battle
 				for(int c = 0; c < 2; c++) {
+					/**
+					 * will decide if the pokemon in the previous battle won or lost
+					 * won: move picture back to top panel
+					 * lost: remove picture entirely & make alive[][] false
+					 * or if it's the start of the game change what the button says
+					 */
 	 				if(pokHealth[c] <= 0 && !nextBattle.getText().equals("START")) {
 						alive[type[c]][y[c]] = false;
 					}else if(nextBattle.getText().equals("START")) {
@@ -149,6 +165,7 @@ public class NewWindow {
 					}
 				}
 				
+				//will loop to check how many pokemon are still alive
 				for(int x = 0; x < 3; x++) {
 					for(int y = 0; y < 10; y++) {
 						if(alive[x][y] && !name[x][y].equals("nool")) {
@@ -157,22 +174,32 @@ public class NewWindow {
 					}
 				}
 				
+				/**
+				 * will display winner if there's only one pokemon left alive
+				 * or will run next battle
+				 */
 				if(notDead == 1) {
+					//will decide which pokemon in final battle won & initialze the window for the winner
 					if(pokHealth[1] <= 0) {
 						Winner win = new Winner(type[0], name[type[0]][y[0]]);
 					}else {
 						Winner win = new Winner(type[1], name[type[1]][y[1]]);
 					}
 				}else if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
-					//
+					//will repeat for both pokemon taking place in the battle
 					for(int i = 0; i < 2; i++) {
 						int rounds = 0;
 						attack[i].setText("");
 						type[i] = r.nextInt(3);
 						source[i] = "";
-						//
+						/**
+						 * will loop until both pokemon are:
+						 * different
+						 * alive
+						 * & will set the source for their picture
+						 */
 						do {
-							//
+							//will change which type it's looking through if it's gone through one whole type already
 							if(rounds > 10) {
 								type[i] = r.nextInt(3);
 								rounds = 0;
@@ -186,7 +213,7 @@ public class NewWindow {
 						pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
 						pokemonPictures[type[i]][y[i]].setIcon(null);
 						
-						//
+						//will set a pokemon's level and say that has taken place
 						if(!pokLevelSet[type[i]][y[i]]) {
 							pokLevel[i] = battle.lvlInput(strength[type[i]]);
 							pokLevelValue[type[i]][y[i]] = pokLevel[i];
@@ -210,17 +237,21 @@ public class NewWindow {
 		nextAttack.addActionListener(new ActionListener() {
 
 			@Override
+			/**
+			 * will initiate the next attack
+			 */
 			public void actionPerformed(ActionEvent e) {
 				double hpLost, criHit;
-				//
+				//will only be able to press button if both pokemon's health is above zero
 				if(pokHealth[0] > 0 && pokHealth[1] > 0) {
-					//
-					if(turn) {//turn = true will be pok[0]
+					//will decide who's turn it is
+					if(turn) {
 						attack[0].setText(battle.pickAttack(type[0]));
 						attack[1].setText("");
 						attack[0].setForeground(Color.magenta);
 						hpLost = battle.apGen(pokLevel[0], battle.returnAttackValue(type[0], battle.returnAttackCoordinates()));
 						hpLost = Math.round(hpLost);
+						//will do heal instead of attack
 						if(hpLost > 1) {
 							pokHealth[0]+=hpLost;
 							attack[0].setForeground(Color.cyan);
@@ -228,24 +259,25 @@ public class NewWindow {
 						}else {
 							criHit = hpLost;
 							hpLost = battle.critChance(criticalHitChance, hpLost);
+							//will recognize when a CriticalHit has taken place
 							if(hpLost == (criHit*2)) {
 								attack[0].setForeground(Color.red);
 							}
 							pokHealth[1]+=hpLost;
+							//will change the health to 0.0 if it below that so it looks better(can't have negative health)
 							if(pokHealth[1] <= 0) {
 								pokHealth[1] = 0.0;
 							}
 							stats[1].setText("<html>" + name[type[1]][y[1]].toUpperCase() + "<br>Level: " + pokLevel[1] + "<br>Health: " + pokHealth[1] + "<br>" + hpLost);
 						}
 						turn = false;
-						//
-						
-					}else {//turn = false will be pok[1]
+					}else {
 						attack[1].setText(battle.pickAttack(type[1]));
 						attack[0].setText("");
 						attack[1].setForeground(Color.pink);
 						hpLost = battle.apGen(pokLevel[1], battle.returnAttackValue(type[1], battle.returnAttackCoordinates()));
 						hpLost = Math.round(hpLost);
+						//will do heal instead of attack
 						if(hpLost > 1) {
 							pokHealth[1]+=hpLost;
 							attack[1].setForeground(Color.cyan);
@@ -253,23 +285,19 @@ public class NewWindow {
 						}else {
 							criHit = hpLost;
 							hpLost = battle.critChance(criticalHitChance, hpLost);
+							//will recognize when a CriticalHit has taken place
 							if(hpLost == (criHit*2)) {
 								attack[1].setForeground(Color.red);
 							}
 							pokHealth[0]+=hpLost;
+							//will change the health to 0.0 if it below that so it looks better(can't have negative health)
 							if(pokHealth[0] <= 0) {
 								pokHealth[0] = 0.0;
 							}
 							stats[0].setText("<html>" + name[type[0]][y[0]].toUpperCase() + "<br>Level: " + pokLevel[0] + "<br>Health: " + pokHealth[0] + "<br>" + hpLost);
 						}
 						turn = true;
-						//
-						/**
-						 * put the label settings into the if statements -
-						 * so hp lost/gained will be on the correct side
-						 */
-					}
-						
+					}	
 				}
 				nextAttack.setText("NEXT ATTACK");
 			}
@@ -309,31 +337,60 @@ public class NewWindow {
 		frame.setContentPane(panelMain);
 		frame.setVisible(true);
 	}
-	
-	public void grabPokemonNames(String grab, int type, int pok) {
-		name[type][pok] = grab;
-	}
-	
-	public void grabRandoPokemon(int grab, int type, int pok) {
-		rando[type][pok] = grab;
-	}
-	
+
+	/**
+	 * will set rando and name to be used for later
+	 */
 	public void setRandoAndName() {
 		name = new String[3][10];
 		rando = new int[3][10];
 	}
 	
+	/**
+	 * will grab the name of the chosen pokemon
+	 * @param grab
+	 * @param type
+	 * @param pok
+	 */
+	public void grabPokemonNames(String grab, int type, int pok) {
+		name[type][pok] = grab;
+	}
+	
+	/**
+	 * will grab the y coordinate of the chosen pokemon relative to the pokemonNameBank
+	 * @param grab
+	 * @param type
+	 * @param pok
+	 */
+	public void grabRandoPokemon(int grab, int type, int pok) {
+		rando[type][pok] = grab;
+	}
+	
+	
+	/**
+	 * will grab population from TestingClass
+	 * which comes from FirstWindow
+	 * @param type
+	 * @param pop
+	 */
 	public void grabPopulation(int type, int pop) {
 		population[type] = pop;
 	}
 	
+	/**
+	 * matches the name of the pokemon with it's picture source
+	 * @param i
+	 * @param type
+	 * @param y
+	 * @return
+	 */
 	public String matchSourceName(int i, int type, int y) {
 		boolean done = false;
 		String source = "blub";
 		int t = 0;
-		//
+		//will loop until the name matches with the correct source so the name and picture macth for being put on the window
 		while(!done) {
-			//
+			//will set source if the first three letters of the name of the chosen pokemon and the source are the same
 			if(name[type][y].substring(0, 3).equals(pokemonPicSource[type][t].substring(0, 3))) {
 				done = true;
 				source = pokemonPicSource[type][t];
@@ -343,15 +400,27 @@ public class NewWindow {
 		}
 		return source;
 	}
-	
-	public void grabStrength(int type, int stren) {
-		strength[type] = stren;
-	}
-	
+
+	/**
+	 * will set the array strength to used later
+	 */
 	public void setStrength() {
 		strength = new int[3];
 	}
 	
+	/**
+	 * will grab the strength of each type from TestingClass to set levels of each pokemon
+	 * which comes from FirstWindow
+	 */
+	public void grabStrength(int type, int stren) {
+		strength[type] = stren;
+	}
+	
+	/**
+	 * will grab the chance % of a critical hit from TestingClass
+	 * which comes from FirstWindow
+	 * @param chc
+	 */
 	public void setCriticalHitChance(int chc) {
 		criticalHitChance = chc;
 	}

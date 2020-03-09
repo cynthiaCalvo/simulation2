@@ -24,9 +24,11 @@ public class TestingClass {
 				picking.pickPokemonRandom(fw.returnPokemonNumbers(x), x);
 			}
 		}
-		for(int t=0; t<3; t++) {
+		//will set the population the user wants of each type
+		for(int t = 0; t < 3; t++) {
 			population[t] = fw.returnPokemonNumbers(t);
 		}
+		
 		NewWindow nw = new NewWindow();
 		nw.setRandoAndName();
 		
@@ -42,6 +44,8 @@ public class TestingClass {
 		nw.gui();
 		nw.setStrength();
 		nw.setCriticalHitChance(fw.returnCHC());
+		
+		//will grab the population and strength of eacht type to send to NewWindow
 		for(int v = 0; v < 3; v++) {
 			nw.grabPopulation(v, population[v]);
 			nw.grabStrength(v, fw.returnStrength(v));
