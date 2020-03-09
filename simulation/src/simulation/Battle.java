@@ -9,15 +9,15 @@ import java.util.Random;
 public class Battle {
 	//this will handle the fighting aspect of the program
 	private String pokemonMoves[][] = {
-			{"Fire punch", "Flamethrower", "Heat crash", "Inferno", "Incinerate"}, //fire moves
-			{"Bullet seed", "Energy ball", "Leaf blade", "Petal dance", "Razor leaf"}, //grass moves
-			{"Aqua jet", "Bubble", "Hydro vortex", "Whirlpool", "Splishy splash"}, //water moves
+			{"Fire punch", "Flamethrower", "Heat crash", "Inferno", "Incinerate", "Heal"}, //fire moves
+			{"Bullet seed", "Energy ball", "Leaf blade", "Petal dance", "Razor leaf", "Heal"}, //grass moves
+			{"Aqua jet", "Bubble", "Hydro vortex", "Whirlpool", "Splishy splash", "Heal"}, //water moves
 	};
 	
 	private int pokemonMoveValues[][] = {
-			{4, 3, 2, 6, 8}, //fire moves
-			{3, 4, 5, 2, 7}, //grass moves
-			{2, 6, 4, 5, 8}, //water moves 
+			{4, 3, 2, 6, 8, -5}, //fire moves
+			{3, 4, 5, 2, 7, -5}, //grass moves
+			{2, 6, 4, 5, 8, -5}, //water moves 
 	};
 	private int attackCoordinates;
 	
@@ -61,9 +61,9 @@ public class Battle {
 		String attack = null;
 		
 		switch(type) {
-		case 0: randomAttack = r.nextInt(4); attack = pokemonMoves[0][randomAttack];break; //fire attacks
-		case 1: randomAttack = r.nextInt(4); attack = pokemonMoves[1][randomAttack];break; //grass attacks
-		case 2: randomAttack = r.nextInt(4); attack = pokemonMoves[2][randomAttack];break; //water attacks
+		case 0: randomAttack = r.nextInt(5); attack = pokemonMoves[0][randomAttack];break; //fire attacks
+		case 1: randomAttack = r.nextInt(5); attack = pokemonMoves[1][randomAttack];break; //grass attacks
+		case 2: randomAttack = r.nextInt(5); attack = pokemonMoves[2][randomAttack];break; //water attacks
 		default: randomAttack = 25;
 		}
 		
@@ -160,5 +160,13 @@ public class Battle {
 			//hi there :)
 		}
 		return attack; 
+	}
+	
+	/*
+	 * Deals with assigning a new move to each pokemon that will heal them.
+	 */
+	public double healMove(int lvl) {
+		
+		return 0;
 	}
 }
