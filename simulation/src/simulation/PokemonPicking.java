@@ -17,7 +17,7 @@ public class PokemonPicking {
 	private int[][] randoPokemon;
 	
 	public PokemonPicking() {
-		//will be set to the pokemon that are randomly chosen
+		//will be set to the pokemon that are randomly chosen 
 		pokemonNames = new String[3][10];
 		//will turn to true if that pokemon has been chosen so there are no repeats
 		noRepeats = new boolean[3][10];
