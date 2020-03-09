@@ -156,7 +156,7 @@ public class NewWindow {
 				}
 				
 				if(notDead == 1) {
-					System.out.println("WINNER");
+					System.out.println("WINNER");//indicate winner here
 				}else if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
 					//
 					for(int i = 0; i < 2; i++) {
