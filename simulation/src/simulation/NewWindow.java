@@ -80,7 +80,7 @@ public class NewWindow {
 				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -152,12 +152,14 @@ public class NewWindow {
 				Random r = new Random();
 				int notDead = 0;
 				rules.setText("");
-				nextAttack.setText("ATTACK");
 				
 				//will check each pokemon in previous battle
 				for(int c = 0; c < 2; c++) {
+					//will go though if it's not the first time clicking nextBattle button
 					if(!nextBattle.getText().equals("START")) {
-						if(pokHealth[0] == 0 || pokHealth[1] == 0 || nextAttack.getText().equals("<- NEXT ATTACK")) {
+						//will decide if the battle is over
+						if(pokHealth[0] == 0 || pokHealth[1] == 0 || nextAttack.getText().equals("<-")) {
+							//will decide what to do if the pokemon won or not
 							if(pokHealth[c] == 0) {
 								alive[type[c]][y[c]] = false;
 							}else {
@@ -206,7 +208,7 @@ public class NewWindow {
 								y[i] = battle.pokemonSelector(population[type[i]], type[i]);
 							}while(y[i] == 25);
 							
-							source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type[i], y[i]);
+							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
 
 							//will change which type it's looking through if it's gone through one whole type already
 							if(rounds > 10) {
@@ -231,6 +233,7 @@ public class NewWindow {
 						
 						stats[i].setText("<html>" + name[type[i]][y[i]].toUpperCase() + "<br>Level: " + pokLevel[i] + "<br>Health: " + pokHealth[i]);
 					}
+					nextAttack.setText("ATTACK");
 				}
 				nextBattle.setText("NEXT BATTLE");
 			}
@@ -305,8 +308,9 @@ public class NewWindow {
 						turn = true;
 					}	
 					nextAttack.setText("NEXT ATTACK");
-				}else {
-					nextAttack.setText("<- NEXT BATTLE");
+				}
+				if(pokHealth[0] == 0 || pokHealth[1] == 0){
+					nextAttack.setText("<-");
 				}
 			}
 				
