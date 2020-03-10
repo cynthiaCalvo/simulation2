@@ -54,7 +54,7 @@ public class FirstWindow implements ActionListener{
 		strength = new JComboBox[3];
 		pokemonStrength = new int[3];
 		
-		top = new JLabel("How many do you want of:");
+		top = new JLabel("<html>How many do you want of:<br>Enter a value from 0-10<br>(A value of 2 will be entered for you if you do not choose)");
 		c.gridy = 0;
 		c.gridx = 1;
 		c.insets = new Insets(0, 0, 10, 0);
@@ -83,7 +83,7 @@ public class FirstWindow implements ActionListener{
 			panel.add(choosePopulation[i], c);	
 		}
 		
-		middle = new JLabel("How strong do you want each type to be:");
+		middle = new JLabel("<html>How strong do you want each type to be:<br>(A value of 1 will be entered for you if you do not choose)");
 		c.gridy = 4;
 		c.gridx = 1;
 		c.insets = new Insets(20, 0, 20, 0);
@@ -111,7 +111,7 @@ public class FirstWindow implements ActionListener{
 			panel.add(strength[y], c);
 		}
 		
-		bottom = new JLabel("<html>Chance of Critical Hit: <br>Put value in as percent w/o % sign<br>(A value of 10 will be entered if you do not fill in)");
+		bottom = new JLabel("<html>Chance of Critical Hit: <br>Put value in as percent w/o % sign<br>(A value of 10 will be entered for you if you do not choose)");
 		c.gridy = 7;
 		c.gridx = 1;
 		c.insets = new Insets(10, 0, 0, 0);
@@ -141,8 +141,14 @@ public class FirstWindow implements ActionListener{
 		String eventName = event.getActionCommand();
 		//will grab the populations of each type from the text fields
 		if(eventName.equals("START")) {
+			//will set the population for each type as per user input
 			for(int i = 0; i < 3; i++) {
-				pokemonNumbers[i] = Integer.parseInt(choosePopulation[i].getText());
+				//will enter 2 for the user if they choose not to enter anything
+				if(choosePopulation[i].getText().equals("")) {
+					pokemonNumbers[i] = 2;
+				}else {
+					pokemonNumbers[i] = Integer.parseInt(choosePopulation[i].getText());	
+				}
 				pokemonStrength[i] = strength[i].getSelectedIndex() + 1;//the +1 is needed b/c we had the user pick b/t 1,2,3 but the computer sees it as 0,1,2
 				trigger = true;
 			}

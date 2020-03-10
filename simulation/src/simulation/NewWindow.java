@@ -39,6 +39,7 @@ public class NewWindow {
 	private boolean[][] pokLevelSet, alive;
 	private boolean turn;
 	private int criticalHitChance;
+	private JLabel rules;
 	
 	/**
 	 * gui() method cannot be a class method b/c it needs to be called after the other methods to set the data in arrays
@@ -79,7 +80,7 @@ public class NewWindow {
 				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -91,6 +92,9 @@ public class NewWindow {
 		population = new int[3];
 		stats = new JLabel[2];
 		attack = new JLabel[2];
+		
+		rules = new JLabel("<html>A random attack will be chosen when you click 'NEXT ATTACK'<br>The attack name will turn red when there is a Critical Hit<br>A Critical Hit will result in x2 damage<br>Pokemon can heal themselves in place of attacking the other pokemon<br>In which case they recieve +5 health");
+		panelGray.add(rules);
 		
 		//will set the display up for battleing
 		for(int u = 0; u < 2; u++) {
@@ -147,14 +151,18 @@ public class NewWindow {
 			public void actionPerformed(ActionEvent e) {
 				Random r = new Random();
 				int notDead = 0;
+				rules.setText("");
+				nextAttack.setText("ATTACK");
 				
 				//will check each pokemon in previous battle
 				for(int c = 0; c < 2; c++) {
 					if(!nextBattle.getText().equals("START")) {
-						if(pokHealth[c] <= 0) {
-							alive[type[c]][y[c]] = false;
-						}else {
-							pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+						if(pokHealth[0] == 0 || pokHealth[1] == 0 || nextAttack.getText().equals("<- NEXT ATTACK")) {
+							if(pokHealth[c] == 0) {
+								alive[type[c]][y[c]] = false;
+							}else {
+								pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+							}
 						}
 					}
 				}
@@ -179,7 +187,7 @@ public class NewWindow {
 					}else {
 						Winner win = new Winner(type[1], name[type[1]][y[1]]);
 					}
-				}else if(pokHealth[0] <= 0 || pokHealth[1] <= 0 || nextBattle.getText().equals("START")) {
+				}else if(pokHealth[0] == 0 || pokHealth[1] == 0 || nextBattle.getText().equals("START")) {
 					//will repeat for both pokemon taking place in the battle
 					for(int i = 0; i < 2; i++) {
 						int rounds = 0;
@@ -198,7 +206,7 @@ public class NewWindow {
 								y[i] = battle.pokemonSelector(population[type[i]], type[i]);
 							}while(y[i] == 25);
 							
-							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
+							source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type[i], y[i]);
 
 							//will change which type it's looking through if it's gone through one whole type already
 							if(rounds > 10) {
@@ -225,7 +233,6 @@ public class NewWindow {
 					}
 				}
 				nextBattle.setText("NEXT BATTLE");
-				nextAttack.setText("ATTACK");
 			}
 		});
 		c.gridy = 2;
@@ -297,8 +304,10 @@ public class NewWindow {
 						}
 						turn = true;
 					}	
+					nextAttack.setText("NEXT ATTACK");
+				}else {
+					nextAttack.setText("<- NEXT BATTLE");
 				}
-				nextAttack.setText("NEXT ATTACK");
 			}
 				
 		});
