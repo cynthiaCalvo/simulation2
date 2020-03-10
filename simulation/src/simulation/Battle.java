@@ -2,24 +2,27 @@
  * Cynthia C. & David S.
  * February+March 2020
  */
-package simulation; 
+package simulation; //package
 
-import java.util.Random;
+import java.util.Random; //import random generator
 
-public class Battle {
-	//this will handle the fighting aspect of the program
-	private String pokemonMoves[][] = {
+public class Battle { //class name (self evident heehoohaa)
+	
+	// a 2d array that holds all of the available moves that any type of pokemon can choose from, the 6th of all being "heal"
+	private String pokemonMoves[][] = { 
 			{"Fire punch", "Flamethrower", "Heat crash", "Inferno", "Incinerate", "Heal"}, //fire moves
 			{"Bullet seed", "Energy ball", "Leaf blade", "Petal dance", "Razor leaf", "Heal"}, //grass moves
 			{"Aqua jet", "Bubble", "Hydro vortex", "Whirlpool", "Splishy splash", "Heal"}, //water moves
 	};
 	
+	// A 2d array that holds the corresponding base (lvl1) damage values for the moves in pokemonMoves 
 	private int pokemonMoveValues[][] = {
 			{-4, -3, -2, -6, -8, 5}, //fire moves
 			{-3, -4, -5, -2, -7, 5}, //grass moves
 			{-2, -6, -4, -5, -8, 5}, //water moves 
 	};
-	private int attackCoordinates;
+	
+	private int attackCoordinates; // I didn't make this lol, Cynthia can explain this
 	
 	
 	/*
@@ -32,7 +35,7 @@ public class Battle {
 		Random r = new Random();
 		int pokemonRandom = 0;
 		
-		switch(population) {
+		switch(population) { //checks for the amount of pokemon left and chooses accordingly
 		case 0: pokemonRandom = 25;break;
 		case 1: pokemonRandom = r.nextInt(1);break;
 		case 2: pokemonRandom = r.nextInt(2);break;
@@ -59,22 +62,28 @@ public class Battle {
 		int randomAttack;
 		String attack = null;
 		
-		switch(type) {
+		switch(type) { // Gives randomAttack one of the 6 available pokemonMoves based on the pokemon's type
 		case 0: randomAttack = r.nextInt(6); attack = pokemonMoves[0][randomAttack];break; //fire attacks
 		case 1: randomAttack = r.nextInt(6); attack = pokemonMoves[1][randomAttack];break; //grass attacks
 		case 2: randomAttack = r.nextInt(6); attack = pokemonMoves[2][randomAttack];break; //water attacks
-		default: randomAttack = 25;
+		default: randomAttack = 25; //idk why it's 25 but it works so whatever
 		}
 		
 		attackCoordinates = randomAttack;
 		return attack; 
 	} //done
 	
-	public int returnAttackValue(int type, int y) {
+	/*
+	 * Returns the pokemon moves back to the main Code
+	 */
+	public int returnAttackValue(int type, int y) { // Cynthia...
 		return pokemonMoveValues[type][y];
 	}//finished
 	
-	public int returnAttackCoordinates() {
+	/*
+	 * Returns the attack values back to the main code
+	 */
+	public int returnAttackCoordinates() { // Cynthia, the sequal...
 		return attackCoordinates;
 	}//finished
 	
@@ -89,7 +98,7 @@ public class Battle {
 		Random r = new Random();
 		int lvl = 1;
 		
-		switch(strength) {
+		switch(strength) { // checks how strong the user wants the pokemon to be and assigns them lvls based on strength
 		case 1: lvl = r.nextInt(4 - 1) + 1;break;
 		case 2: lvl = r.nextInt(7-4) + 4;break;
 		case 3: lvl = r.nextInt(11-7) + 7;break;
@@ -105,7 +114,7 @@ public class Battle {
 	public double hpGen(int lvl) {
 		double health  = 20;
 		
-		switch(lvl) {
+		switch(lvl) { //assigns the pokemon health based on their lvl
 		case 1: health = health*1;break;
 		case 2: health = health*1.2;break;
 		case 3: health = health*1.4;break;
@@ -120,7 +129,7 @@ public class Battle {
 		}
 		
 		return health;
-	} //done?? - yes
+	} //done
 	
 	/*
 	 * Will determine how strong the attack of a particular pokemon is
@@ -128,8 +137,8 @@ public class Battle {
 	public double apGen(int lvl, int atkValue) { //lvl is self explanitory, atkValue is the base damage of the generated attack
 		double atk = 0;
 		
-		if(atkValue < 0) {
-			switch(lvl) {
+		if(atkValue < 0) { //...I kinda forget how this works but it does so don't touch it
+			switch(lvl) { //multiplies the damage of a given attack based on the pokemon's lvl
 			case 1: atk = atkValue*1;break;
 			case 2: atk = atkValue*1.2;break;
 			case 3: atk = atkValue*1.4;break;
@@ -147,7 +156,7 @@ public class Battle {
 		
 		
 		return atk;
-	} //done?
+	} //done
 	
 	/*
 	 * Deals with assigning a chance for AN attack to do double dablage
@@ -157,19 +166,12 @@ public class Battle {
 		Random r = new Random();
 		chance = r.nextInt(100) + 1;
 		
-		if(chance == userInput || chance < userInput) {
+		if(chance == userInput || chance < userInput) { //If the random amount is equal to or less than the user's number, then it'll be a crit.
 			attack = attack*2;
 		}else {
-			//hi there :)
+			//No critical hit for youuuu
 		}
 		return attack; 
 	}
 	
-	/*
-	 * Deals with assigning a new move to each pokemon that will heal them.
-	 */
-	public double healMove(int lvl) {
-		
-		return 0;
-	}
 }
