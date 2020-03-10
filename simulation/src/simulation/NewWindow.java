@@ -150,18 +150,12 @@ public class NewWindow {
 				
 				//will check each pokemon in previous battle
 				for(int c = 0; c < 2; c++) {
-					/**
-					 * will decide if the pokemon in the previous battle won or lost
-					 * won: move picture back to top panel
-					 * lost: remove picture entirely & make alive[][] false
-					 * or if it's the start of the game change what the button says
-					 */
-	 				if(pokHealth[c] <= 0 && !nextBattle.getText().equals("START")) {
-						alive[type[c]][y[c]] = false;
-					}else if(nextBattle.getText().equals("START")) {
-						nextBattle.setText("NEXTBATTLE");
-					}else {
-						pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+					if(!nextBattle.getText().equals("START")) {
+						if(pokHealth[c] <= 0) {
+							alive[type[c]][y[c]] = false;
+						}else {
+							pokemonPictures[type[c]][y[c]].setIcon(new ImageIcon(new ImageIcon(source[c]).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
+						}
 					}
 				}
 				
@@ -190,7 +184,6 @@ public class NewWindow {
 					for(int i = 0; i < 2; i++) {
 						int rounds = 0;
 						attack[i].setText("");
-						type[i] = r.nextInt(3);
 						source[i] = "";
 						/**
 						 * will loop until both pokemon are:
@@ -199,15 +192,20 @@ public class NewWindow {
 						 * & will set the source for their picture
 						 */
 						do {
+							//will change type if the population is zero(0)
+							do {
+								type[i] = r.nextInt(3);
+								y[i] = battle.pokemonSelector(population[type[i]], type[i]);
+							}while(y[i] == 25);
+							
+							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
+
 							//will change which type it's looking through if it's gone through one whole type already
 							if(rounds > 10) {
-								type[i] = r.nextInt(3);
 								rounds = 0;
+							}else {
+								rounds++;
 							}
-							y[i] = battle.pokemonSelector(population[type[i]], type[i]);
-							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
-							
-							rounds++;
 						}while(i == 1 && source[0].equals(source[1]) || !alive[type[i]][y[i]]);
 						
 						pokemonBattle[i].setIcon(new ImageIcon(new ImageIcon(source[i]).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
@@ -226,6 +224,7 @@ public class NewWindow {
 						stats[i].setText("<html>" + name[type[i]][y[i]].toUpperCase() + "<br>Level: " + pokLevel[i] + "<br>Health: " + pokHealth[i]);
 					}
 				}
+				nextBattle.setText("NEXT BATTLE");
 				nextAttack.setText("ATTACK");
 			}
 		});

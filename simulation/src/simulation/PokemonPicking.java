@@ -24,7 +24,7 @@ public class PokemonPicking {
 		//will be set to the location of the pokemon chosen for that spot in the array
 		randoPokemon = new int[3][10];
 		/**will set the extra spots at the end(if there are any) to 
-		 * "null" so that it doesn't count them
+		 * "nool" so that it doesn't count them
 		 */
 	}
 	/**
@@ -84,6 +84,12 @@ public class PokemonPicking {
 		return pokemonNames[type][pok];
 	}
 	
+	/**
+	 * will return the bank of all the pokemon names
+	 * @param type
+	 * @param pok
+	 * @return
+	 */
 	public String returnPokemonNameBank(int type, int pok) {
 		return pokemonNameBank[type][pok];
 	}

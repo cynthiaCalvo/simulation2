@@ -33,7 +33,7 @@ public class Battle {
 		int pokemonRandom = 0;
 		
 		switch(population) {
-		case 0: pokemonRandom = r.nextInt(0);break;
+		case 0: pokemonRandom = 25;break;
 		case 1: pokemonRandom = r.nextInt(1);break;
 		case 2: pokemonRandom = r.nextInt(2);break;
 		case 3: pokemonRandom = r.nextInt(3);break;
@@ -44,7 +44,6 @@ public class Battle {
 		case 8: pokemonRandom = r.nextInt(8);break;
 		case 9: pokemonRandom = r.nextInt(9);break;
 		case 10: pokemonRandom = r.nextInt(10);break;
-		default:
 		}
 		return pokemonRandom;
 	}//done
