@@ -158,7 +158,7 @@ public class NewWindow {
 					//will go though if it's not the first time clicking nextBattle button
 					if(!nextBattle.getText().equals("START")) {
 						//will decide if the battle is over
-						if(pokHealth[0] == 0 || pokHealth[1] == 0 || nextAttack.getText().equals("<-")) {
+						if(pokHealth[0] == 0 || pokHealth[1] == 0 || nextAttack.getText().equals("NOPE")) {
 							//will decide what to do if the pokemon won or not
 							if(pokHealth[c] == 0) {
 								alive[type[c]][y[c]] = false;
@@ -310,7 +310,7 @@ public class NewWindow {
 					nextAttack.setText("NEXT ATTACK");
 				}
 				if(pokHealth[0] == 0 || pokHealth[1] == 0){
-					nextAttack.setText("<-");
+					nextAttack.setText("NOPE");
 				}
 			}
 				
