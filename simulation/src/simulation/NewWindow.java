@@ -80,7 +80,7 @@ public class NewWindow {
 				//@my house: C:\Users\Cynthia\Documents\git\simulation2\simulation\src\simulation\Images/
 				if(!name[x][y].equals("nool")) {
 					pokemonPictures[x][y] = new JLabel();
-					String source = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + pokemonPicSource[x][rando[x][y]];
+					String source = "H:/git/simulation2/simulation/src/simulation/Images/" + pokemonPicSource[x][rando[x][y]];
 					pokemonPictures[x][y].setIcon(new ImageIcon(new ImageIcon(source).getImage().getScaledInstance(70, 70, Image.SCALE_DEFAULT)));
 					c.gridx = y + 1;
 					c.insets = new Insets(0, 5, 0, 0);
@@ -208,7 +208,7 @@ public class NewWindow {
 								y[i] = battle.pokemonSelector(population[type[i]], type[i]);
 							}while(y[i] == 25);
 							
-							source[i] = "C:\\Users\\Cynthia\\Documents\\git\\simulation2\\simulation\\src\\simulation\\Images/" + matchSourceName(i, type[i], y[i]);
+							source[i] = "H:/git/simulation2/simulation/src/simulation/Images/" + matchSourceName(i, type[i], y[i]);
 
 							//will change which type it's looking through if it's gone through one whole type already
 							if(rounds > 10) {
